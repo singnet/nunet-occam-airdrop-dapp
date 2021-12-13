@@ -19,11 +19,11 @@ const envS3Bucket: { [key in appEnv]: string } = {
 const zoneName = "singularitynet.io";
 
 const domainNames: { [key in appEnv]: string } = {
-  [appEnv.ropsten]: "ropsten-airdrop.singularitynet.io",
-  [appEnv.mainnet]: "airdrop.singularitynet.io",
+  [appEnv.ropsten]: <string>process.env.ROPSTEN_DOMAIN_NAME,
+  [appEnv.mainnet]: <string>process.env.MAINNET_DOMAIN_NAME,
 };
 
-const githubRepo = "singnet/airdrop-dapp";
+const githubRepo = "singnet/nunet-occam-airdrop-dapp";
 const githubBranch: { [key in string]: string } = {
   ropsten: "development",
   mainnet: "master",
