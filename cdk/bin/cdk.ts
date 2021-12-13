@@ -10,7 +10,11 @@ import { awsEnvironment } from "../config";
 // BUILDING THE APPLICATION
 const nextConfigDir = "../";
 const commandDir = path.join(process.cwd(), nextConfigDir);
-export const buildOutputDir = path.join(process.cwd(), nextConfigDir, ".serverless_nextjs");
+export const buildOutputDir = path.join(
+  process.cwd(),
+  nextConfigDir,
+  ".serverless_nextjs"
+);
 
 const options = {
   // cmd: path.join(cwd, "./node_modules/.bin/next"),
@@ -34,7 +38,9 @@ builder
   .then(() => {
     const app = new cdk.App();
 
-    new CDKPipelineStack(app, "CDKPipelineStack", { env: awsEnvironment });
+    new CDKPipelineStack(app, <string>process.env.STACK_NAME, {
+      env: awsEnvironment,
+    });
 
     // app.synth();
   })
