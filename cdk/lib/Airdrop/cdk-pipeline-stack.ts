@@ -23,10 +23,7 @@ const createPipeline = (
   const pipeline = new CodePipeline(stack, `${stage}-occam-airdrop-pipeline`, {
     pipelineName: `${stage}-airdrop-occam-pipeline`,
     synth: new CodeBuildStep("Synth", {
-      input: CodePipelineSource.gitHub(
-        appConfig.repo.source,
-        appConfig.repo.branch
-      ),
+      input: CodePipelineSource.gitHub(appConfig.repo.source, "development"),
       commands: [
         `APP_ENV=${stage}`,
         `aws s3 cp ${appConfig.appEnvBucketPath} .`,
@@ -63,6 +60,6 @@ export class CDKPipelineStack extends Stack {
     super(scope, id, props);
 
     createPipeline(this, appEnv.ropsten);
-    createPipeline(this, appEnv.mainnet);
+    // createPipeline(this, appEnv.mainnet);
   }
 }

@@ -7,13 +7,15 @@ export const awsEnvironment = {
 };
 
 export enum appEnv {
-  ropsten = "ropsten",
-  mainnet = "mainnet",
+  ropsten = "ropsten-occam",
+  mainnet = "mainnet-occam",
 }
 
+const s3ConfigFolder = <string>process.env.S3_CONFIG_FOLDER;
+
 const envS3Bucket: { [key in appEnv]: string } = {
-  [appEnv.ropsten]: "snet-ropsten-v2-configs",
-  [appEnv.mainnet]: "snet-mainnet-v2-configs",
+  [appEnv.ropsten]: `snet-ropsten-v2-configs/${s3ConfigFolder}`,
+  [appEnv.mainnet]: `snet-mainnet-v2-configs/${s3ConfigFolder}`,
 };
 
 const zoneName = "singularitynet.io";
@@ -63,8 +65,8 @@ const createConfig = (stage: appEnv): Config => ({
     distributionName: `${stage}-airdrop-distribution`,
     imageCachePolicyName: `${stage}-airdrop-image-cache-policy`,
   },
-  appEnvBucketPath: `s3://${envS3Bucket[stage]}/airdrop-dapp/application/.env`,
-  cdkEnvBucketPath: `s3://${envS3Bucket[stage]}/airdrop-dapp/cdk/.env`,
+  appEnvBucketPath: `s3://${envS3Bucket[stage]}/application/.env`,
+  cdkEnvBucketPath: `s3://${envS3Bucket[stage]}/cdk/.env`,
   domainName: domainNames[stage],
   zoneName,
   certificateARN: <string>process.env.CERTIFICATE_ARN,
