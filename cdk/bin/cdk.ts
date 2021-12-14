@@ -1,4 +1,6 @@
 #!/usr/bin/env node
+import * as dotenv from "dotenv";
+
 import "source-map-support/register";
 import * as cdk from "@aws-cdk/core";
 import * as path from "path";
@@ -6,6 +8,8 @@ import { Builder } from "@sls-next/lambda-at-edge";
 
 import { CDKPipelineStack } from "../lib/Airdrop/cdk-pipeline-stack";
 import { awsEnvironment } from "../config";
+
+dotenv.config();
 
 // BUILDING THE APPLICATION
 const nextConfigDir = "../";
@@ -37,6 +41,8 @@ builder
   .build()
   .then(() => {
     const app = new cdk.App();
+
+    console.log("STACK NAME: ", process.env.STACK_NAME);
 
     new CDKPipelineStack(app, <string>process.env.STACK_NAME, {
       env: awsEnvironment,
