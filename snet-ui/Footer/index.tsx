@@ -7,8 +7,13 @@ import ListItemButton from "@mui/material/ListItemButton";
 import Typography from "@mui/material/Typography";
 import ListItem from "@mui/material/ListItem";
 import AppLogo from "public/AppLogo.png";
+import { FAQPage } from "snet-ui/FAQ/index.stories";
 
-export default function Footer() {
+type FooterProps={
+  handleScrollToLink : (scrollToKey?:string) => void;
+}
+export default function Footer({handleScrollToLink}:FooterProps) {
+  
   return (
     <Box
       sx={{
@@ -56,8 +61,13 @@ export default function Footer() {
                 A project powered by
               </Typography>
             </ListItem>
-            <ListItem sx={{ justifyContent: "right" }}>
-              <img src="SNETLogoHorizontalWhite.png" />
+            <ListItem
+              sx={{
+                justifyContent: "right",
+               
+              }}
+            >
+              <img src="SNETLogo.png" height="37.7px" width="129.26px"/>
             </ListItem>
           </List>
         </Grid>
@@ -78,6 +88,7 @@ export default function Footer() {
                   target={link.external ? "_blank" : ""}
                   rel={link.external ? "noreferrer noopener" : ""}
                   key={link.text}
+                 // onClick={() => handleScrollToLink(scrollToKey)}
                 >
                   <Typography variant="body1" sx={{ m: 2, mt: 0, mb: 0 }}>
                     {link.text}
@@ -98,11 +109,13 @@ const LinksData = [
   {
     header: "Airdrop",
     links: [
-      { text: "How Airdrop Works", url: "#", external: false },
-      { text: "Airdrop Rules", url: "#", external: false },
-      { text: "Airdrop Schedule", url: "#", external: false },
-      { text: "F.A.Q", url: "#", external: false },
-      { text: "Contact Us", url: "#", external: false },
+      { text: "How Airdrop Works", url: "/howitworks", external: false,
+      //scrollToKey:"rulesRef" 
+    },
+      { text: "Airdrop Rules", url:"/rules", external: false },
+      { text: "Airdrop Schedule", url: "/schedule", external: false },
+      { text: "F.A.Q", url: "/faqpage", external: false },
+      { text: "Contact Us", url: "/contactus", external: false },
     ],
   },
   {
@@ -124,3 +137,11 @@ const LinksData = [
     ],
   },
 ];
+function rulesRef(rulesRef: any): void {
+  throw new Error("Function not implemented.");
+}
+
+function scrollToKey(scrollToKey: any): void {
+  throw new Error("Function not implemented.");
+}
+
