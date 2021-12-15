@@ -71,12 +71,12 @@ const Registration: FunctionComponent<RegistrationProps> = ({
   setClaimStatus,
   airdropTotalTokens,
 }) => {
+  const [windowAction, setWindowAction] = useState<string>("");
   const [error, setErrors] = useState<any>(null);
   const [uiAlert, setUiAlert] = useState<{ type: AlertColor; message: string }>(
     { type: AlertTypes.info, message: "" }
   );
   const [airdropOpen, setAirdropOpen] = useState(false);
-  const [windowAction, setWindowAction] = useState<string>("");
 
   const [airdropHistory, setAirdropHistory] = useState([]);
   const { account, library, chainId } = useActiveWeb3React();
@@ -176,10 +176,8 @@ const Registration: FunctionComponent<RegistrationProps> = ({
         value: `${el.txn_status}`,
       },
     ]);
-
     const airdropWindowAction =
       windowStatusActionMap[activeWindow?.airdrop_window_status ?? ""];
-
     setWindowAction(airdropWindowAction);
     setAirdropHistory(history.flat());
   };
@@ -234,7 +232,10 @@ const Registration: FunctionComponent<RegistrationProps> = ({
       try {
         // TODO: Don't hardcode it, use it from the API or env
         // const tokenAddress = "0xa1e841e8f770e5c9507e2f8cfd0aa6f73009715d"; // AGIX
-        const tokenAddress = "0x5e94577b949a56279637ff74dfcff2c28408f049"; // SDAO
+        const tokenAddress = "0x7F44Bc93BCb96011800Da80d1a31E05e5A5AC7f9";
+        console.log("calling claim method");
+
+        // TODO: Split signature and pass it as v,r,s
 
         const txn = await airdropContract.claim(
           tokenAddress,
@@ -350,14 +351,12 @@ const Registration: FunctionComponent<RegistrationProps> = ({
       activeWindow?.airdrop_window_status === WindowStatus.REGISTRATION,
     [userRegistered, activeWindow]
   );
-
   if (!activeWindow) {
     return null;
   }
-
-  if (!account) {
+  if (!account && (activeWindow !== null || activeWindow !== undefined)) {
     return (
-      <Grid container spacing={2} px={4} mt={2} mb={8}>
+      <Grid container spacing={2} px={5} mt={2} mb={8}>
         <Grid item xs={12} sm={6}>
           <Airdropinfo blogLink="www.google.com" />
         </Grid>
@@ -383,8 +382,11 @@ const Registration: FunctionComponent<RegistrationProps> = ({
       </Box>
     );
   }
-
   if (userEligibility === UserEligibility.NOT_ELIGIBLE) {
+    return null;
+  }
+
+  if (!activeWindow) {
     return null;
   }
 
@@ -429,7 +431,6 @@ const Registration: FunctionComponent<RegistrationProps> = ({
   ) : !showMini ? (
     <Box sx={{ px: [0, 4, 15] }}>
       <AirdropRegistration
-        windowAction={windowAction}
         currentWindowId={activeWindow.airdrop_window_order}
         totalWindows={totalWindows}
         airdropWindowTotalTokens={activeWindow.airdrop_window_total_tokens}

@@ -235,11 +235,11 @@ const Home: NextPage = () => {
         blogLink="www.google.com"
         ref={rulesRef}
       />
+
       <AirdropSchedules ref={scheduleRef} schedules={schedules} />
       <Ecosystem blogLink="www.google.com" />
 
       <FAQPage />
-      <Learn />
     </CommonLayout>
   );
 };

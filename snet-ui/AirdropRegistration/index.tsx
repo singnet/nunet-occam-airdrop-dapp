@@ -11,7 +11,12 @@ import Alert, { AlertColor } from "@mui/material/Alert";
 import LoadingButton from "../../snet-ui/LoadingButton";
 import styles from "./style.module.css";
 import StatusBadge from "./StatusBadge";
-import { isDateBetween, isDateGreaterThan } from "../../utils/date";
+import { Stack } from "@mui/material";
+import { isDateBetween, isDateGreaterThan } from "utils/date";
+import Staketype from "snet-ui/AirdropRegistration/Staketype";
+import axios from "utils/Axios";
+
+import { API_PATHS } from "utils/constants/ApiPaths";
 
 type HistoryEvent = {
   label: string;
@@ -95,6 +100,7 @@ export default function AirdropRegistration({
     try {
       setClaimLoader(true);
       await onClaim();
+      //await stake();
     } finally {
       setClaimLoader(false);
     }
@@ -114,8 +120,6 @@ export default function AirdropRegistration({
     `${activeWindow?.airdrop_window_registration_start_period} UTC`,
     new Date()
   );
-
-  // const isUpcomingClaim = isDateGreaterThan(`${activeWindow?.airdrop_window_claim_start_period} UTC`, new Date());
 
   const isClaimActive = isDateBetween(
     `${activeWindow?.airdrop_window_claim_start_period} UTC`,
@@ -160,14 +164,20 @@ export default function AirdropRegistration({
         <FlipCountdown endDate={endDate} />
         {airdropWindowStatus === WindowStatus.CLAIM && isClaimActive ? (
           <>
-            <Box sx={{ mt: 2 }}>
-              <Typography variant="label" align="center" component="p">
+            <Box sx={{ mt: 6, mb: 4 }}>
+              <Typography
+                variant="subtitle1"
+                align="center"
+                component="p"
+                color="text.secondary"
+              >
                 Airdrop window {currentWindowId} / {totalWindows} rewards
               </Typography>
               <Typography
-                variant="h5"
+                variant="h3"
                 color="textAdvanced.secondary"
                 align="center"
+                sx={{ mt: 0.8 }}
               >
                 {airdropWindowTotalTokens}
               </Typography>
@@ -202,6 +212,13 @@ export default function AirdropRegistration({
             </Box>
           </>
         ) : null}
+        <Box sx={{ px: 2, mx: 26, borderColor: "error.main" }}>
+          {uiAlert.message ? (
+            <Alert severity={uiAlert.type} sx={{ mt: 2 }}>
+              {uiAlert.message}
+            </Alert>
+          ) : null}
+        </Box>
         <Box
           sx={{
             mt: 6,
@@ -212,15 +229,29 @@ export default function AirdropRegistration({
           }}
         >
           {airdropWindowStatus === WindowStatus.CLAIM && isClaimActive ? (
-            <LoadingButton
-              variant="contained"
-              color="secondary"
-              sx={{ width: 350, fontweight: "bold" }}
-              onClick={handleClaimClick}
-              loading={claimLoader}
-            >
-              Claim Now
-            </LoadingButton>
+            <Stack spacing={2} direction="row">
+              <LoadingButton
+                variant="contained"
+                color="secondary"
+                sx={{
+                  width: 350,
+                  textTransform: "capitalize",
+                  fontWeight: 600,
+                }}
+                onClick={handleClaimClick}
+                loading={claimLoader}
+              >
+                Claim
+              </LoadingButton>
+
+              {/* <Button
+                sx={{ textTransform: "capitalize", fontWeight: 600 }}
+                variant="outlined"
+                color="bgHighlight"
+              >
+                Claim to Wallet
+              </Button> */}
+            </Stack>
           ) : (
             <>
               <Box
@@ -230,7 +261,7 @@ export default function AirdropRegistration({
                   <LoadingButton
                     variant="contained"
                     color="secondary"
-                    sx={{ width: 170 }}
+                    sx={{ width: 170, fontWeight: 600 }}
                     onClick={handleRegistrationClick}
                     loading={registrationLoader}
                   >
@@ -244,8 +275,8 @@ export default function AirdropRegistration({
                 <Button
                   variant="contained"
                   color="secondary"
-                  sx={{ width: 170 }}
                   onClick={onViewSchedule}
+                  sx={{ textTransform: "capitalize", width: 170 }}
                 >
                   View Schedule
                 </Button>
@@ -256,8 +287,12 @@ export default function AirdropRegistration({
                 <Button
                   variant="contained"
                   color="secondary"
-                  sx={{ width: 170 }}
                   onClick={onViewRules}
+                  sx={{
+                    textTransform: "capitalize",
+                    width: 170,
+                    fontWeight: 600,
+                  }}
                 >
                   View Rules
                 </Button>
@@ -265,13 +300,7 @@ export default function AirdropRegistration({
             </>
           )}
         </Box>
-        <Box sx={{ px: 2 }}>
-          {uiAlert.message ? (
-            <Alert severity={uiAlert.type} sx={{ mt: 2 }}>
-              {uiAlert.message}
-            </Alert>
-          ) : null}
-        </Box>
+
         {history && history.length > 0 ? (
           <Box>
             <Typography

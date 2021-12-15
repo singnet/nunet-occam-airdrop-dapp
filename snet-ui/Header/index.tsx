@@ -7,9 +7,10 @@ import MobileHeader from "./MobileHeader";
 import NavBar from "./NavBar";
 import { styles } from "./styles";
 import { navData, userActions } from "../../snet-ui/constants/Header";
-import Button from "@mui/material/Button";
+//import {Button} from "@mui/Button";
+import { Button as MuiButton} from "@mui/material";
 import AccountCircleIcon from "@mui/icons-material/AccountCircle";
-
+import { styled } from "@mui/system";
 import Typography from "@mui/material/Typography";
 import Menu from "@mui/material/Menu";
 import MenuItem from "@mui/material/MenuItem";
@@ -21,6 +22,10 @@ type HeaderProps = WithStyles<typeof styles> & {
   onConnectWallet: () => void;
   onDisconnect: () => void;
 };
+const Button=styled(MuiButton)`
+
+text-transform:capitalize;
+`;
 
 const Header = ({
   classes,
@@ -51,8 +56,8 @@ const Header = ({
   return (
     <div className={`${classes.header} ${classes.addBgColor}`}>
       <div className={classes.wrapper}>
-        <Grid container sx={{ m: 8.5, mt: 0, mb: 0 }}>
-          <Grid item md={3} className={classes.logoSection}>
+        <Grid container sx={{ m: 2, mt: 0, mb: 0 }}>
+          <Grid item md={3} className={classes.logoSection} >
             <MobileHeader navigationData={navData} userActions={userActions} />
 
             <h1>
@@ -61,7 +66,7 @@ const Header = ({
               </a>
             </h1>
           </Grid>
-          <Grid item md={6} className={classes.navigationSection}>
+          <Grid item md={7} className={classes.navigationSection}>
             <NavBar
               navigationData={navData}
               onConnectWallet={onConnectWallet}
@@ -69,7 +74,8 @@ const Header = ({
           </Grid>
           <Grid
             item
-            md={3}
+            //md={3}
+            //mr={8}
             // className={classes.navigationSection}
             sx={{ justifyContent: "right", color: "common.white" }}
           >
@@ -106,6 +112,7 @@ const Header = ({
                 onClick={onConnectWallet}
                 color="secondary"
                 variant="contained"
+                sx={{textTransform:"capitalize",fontWeight:600}}
               >
                 Connect Wallet
               </Button>

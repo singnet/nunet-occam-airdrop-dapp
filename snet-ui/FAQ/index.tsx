@@ -65,6 +65,7 @@ export default function FAQPage() {
             size="large"
             color="secondary"
             href="/contactus"
+            sx={{textTransform:"capitalize",fontWeight:600}}
           >
             <Typography color="secondary.main" variant="subtitle2">
               Contact us
