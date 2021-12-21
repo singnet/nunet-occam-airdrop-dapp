@@ -62,7 +62,10 @@ export class CDKPipelineStack extends Stack {
   constructor(scope: Construct, id: string, props?: StackProps) {
     super(scope, id, props);
 
-    createPipeline(this, appEnv.ropsten);
-    createPipeline(this, appEnv.mainnet);
+    if (process.env.APP_ENV === appEnv.mainnet) {
+      createPipeline(this, appEnv.mainnet);
+    } else {
+      createPipeline(this, appEnv.ropsten);
+    }
   }
 }
