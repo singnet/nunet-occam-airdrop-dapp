@@ -125,7 +125,7 @@ const LinksData = [
 
         scrollToKey: "schedule",
       },
-      { text: "F.A.Q", scrollToKey: "faq" },
+      
       { text: "Contact Us", url: "/contactus", external: false },
     ],
   },

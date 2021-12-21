@@ -10,7 +10,7 @@ export default function Airdropinfo({ blogLink }: Props) {
   return (
     <Box sx={{mr:3,m:5.5}}>
       <Typography align="left" fontWeight="bold" variant="h1" color="bgtext.main">
-        Airdrop Information: Find out how to participate in the NuNet Airdrop.
+        Airdrop Information: Find out how to participate in the NuNet Occam Airdrop.
       </Typography>
       <Typography color="textAdvanced.dark" variant="subtitle1" sx={{ mt: 3, display: "block", textAlign: "left" }}>
         Like all SingularityNET projects, NuNet has allocated 5% of its token supply for an airdrop to our loyal
