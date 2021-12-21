@@ -27,8 +27,8 @@ const domainNames: { [key in appEnv]: string } = {
 
 const githubRepo = "singnet/nunet-occam-airdrop-dapp";
 const githubBranch: { [key in string]: string } = {
-  ropsten: "development",
-  mainnet: "master",
+  [appEnv.ropsten]: "development",
+  [appEnv.mainnet]: "master",
 };
 
 type Config = {
