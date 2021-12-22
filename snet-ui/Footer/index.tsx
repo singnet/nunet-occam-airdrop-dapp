@@ -40,7 +40,7 @@ export default function Footer({ handleScrollToLink }: FooterProps) {
             </ListItem>
             <ListItemButton
               component="a"
-              href="www.google.com"
+              href="https://nunet.io/"
               target="_blank"
               rel="noreferrer noopener"
               sx={{ justifyContent: "right" }}
@@ -113,17 +113,13 @@ const LinksData = [
 
         scrollToKey: "howitworks",
       },
-      {
-        text: "Airdrop Rules",
-
-        scrollToKey: "rules",
-      },
+      
       {
         text: "Airdrop Schedule",
 
         scrollToKey: "schedule",
       },
-      { text: "F.A.Q", scrollToKey: "faq" },
+      
       { text: "Contact Us", url: "/contactus", external: false },
     ],
   },
@@ -132,7 +128,7 @@ const LinksData = [
     links: [
       {
         text: "Official Blog",
-        url: "https://medium.com/nunet",
+        url: "https://medium.com/occam-finance/nunet-backed-by-singularitynet-to-hold-ido-on-occamrazer-7e9eab947add",
         external: true,
       },
       {

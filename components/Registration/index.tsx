@@ -513,7 +513,7 @@ const Registration: FunctionComponent<RegistrationProps> = ({
     return (
       <Grid container spacing={2} px={5} mt={2} mb={8}>
         <Grid item xs={12} sm={6}>
-          <Airdropinfo blogLink="www.google.com" />
+          <Airdropinfo blogLink="https://nunet-io.github.io/public/NuNet_Whitepaper_2.0.pdf" />
         </Grid>
         <Grid item xs={12} sm={6}>
           <AirdropRegistrationMini
@@ -605,7 +605,7 @@ const Registration: FunctionComponent<RegistrationProps> = ({
   ) : (
     <Grid container spacing={2} px={4} mt={2} mb={8}>
       <Grid item xs={12} sm={6}>
-        <Airdropinfo blogLink="www.google.com" />
+        <Airdropinfo blogLink="https://nunet-io.github.io/public/NuNet_Whitepaper_2.0.pdf" />
       </Grid>
       <Grid item xs={12} sm={6}>
         <AirdropRegistrationMini
