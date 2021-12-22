@@ -40,7 +40,7 @@ export default function Footer({ handleScrollToLink }: FooterProps) {
             </ListItem>
             <ListItemButton
               component="a"
-              href="www.google.com"
+              href="https://nunet.io/"
               target="_blank"
               rel="noreferrer noopener"
               sx={{ justifyContent: "right" }}

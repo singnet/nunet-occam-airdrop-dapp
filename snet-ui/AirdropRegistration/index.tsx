@@ -228,7 +228,7 @@ export default function AirdropRegistration({
           <Grid container spacing={2} sx={{ marginTop: 2 }}>
             <Grid item xs={6}>
               <Link
-                href={`https://google.com`}
+                href={`https://singularitynet.io/`}
                 target="_blank"
                 rel="noreferrer"
               >

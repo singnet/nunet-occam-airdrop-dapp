@@ -19,7 +19,7 @@ const AirdropSchedules = ({ schedules }: AirdropProps, ref) => {
   }
   return (
     <Box sx={{ bgcolor: "bgHighlight.main" }} ref={ref}>
-      <Schedule title="Airdrop Schedule" events={schedules} blogLink="www.google.com" />
+      <Schedule title="Airdrop Schedule" events={schedules} blogLink="https://medium.com/occam-finance/nunet-backed-by-singularitynet-to-hold-ido-on-occamrazer-7e9eab947add" />
     </Box>
   );
 };

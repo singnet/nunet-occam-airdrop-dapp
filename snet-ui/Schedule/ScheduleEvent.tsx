@@ -52,7 +52,7 @@ export default function ScheduleEvent({
       <TimelineOppositeContent sx={{ display: "none" }} />
       <TimelineSeparator>
         <TimelineDot
-          sx={{ width: 19, height: 19 }}
+          sx={{ width: 19, height: 19,borderColor:"common.white" }}
           color={
             isActiveEvent
               ? "success"
@@ -87,6 +87,7 @@ export default function ScheduleEvent({
           <Grid item xs={4}>
             <Typography
               variant="h6"
+              fontSize="18px"
               color={
                 isActiveEvent
                   ? "success.main"
@@ -99,6 +100,7 @@ export default function ScheduleEvent({
             </Typography>
             <Typography
               variant="h6"
+              fontSize="18px"
               color={
                 isActiveEvent
                   ? "success.main"
@@ -112,7 +114,9 @@ export default function ScheduleEvent({
           </Grid>
           <Grid item xs={8}>
             <Typography
-              variant="priority"
+              
+              variant="h6"
+              fontSize="18px"
               color={
                 isActiveEvent
                   ? "secondary"
@@ -124,7 +128,7 @@ export default function ScheduleEvent({
             >
               {event.title}
             </Typography>
-            <Typography variant="normal" color="textAdvanced.primary">
+            <Typography variant="normal" fontSize="14px" color="textAdvanced.primary">
               {event.description}
             </Typography>
           </Grid>
