@@ -115,11 +115,7 @@ const LinksData = [
 
         scrollToKey: "howitworks",
       },
-      {
-        text: "Airdrop Rules",
-
-        scrollToKey: "rules",
-      },
+      
       {
         text: "Airdrop Schedule",
 
