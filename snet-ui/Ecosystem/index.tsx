@@ -48,19 +48,7 @@ export default function Ecosystem({ blogLink }: Props) {
                 Visit SingularityNet
               </Button>
             ) : null}
-            {blogLink ? (
-              <Button
-              sx={{textTransform:"capitalize",fontWeight:600}}
-                variant="outlined"
-                color="bgHighlight"
-                endIcon={<OpenInNewIcon />}
-                href={blogLink}
-                target="_blank"
-                rel="noreferrer noopener"
-              >
-                View All Airdrops
-              </Button>
-            ) : null}
+            
           </Stack>
         </Box>
       </Box>

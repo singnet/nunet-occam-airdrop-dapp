@@ -125,7 +125,7 @@ const LinksData = [
 
         scrollToKey: "schedule",
       },
-      { text: "F.A.Q", scrollToKey: "faq" },
+      
       { text: "Contact Us", url: "/contactus", external: false },
     ],
   },
@@ -134,7 +134,7 @@ const LinksData = [
     links: [
       {
         text: "Official Blog",
-        url: "https://medium.com/nunet",
+        url: "https://medium.com/occam-finance/nunet-backed-by-singularitynet-to-hold-ido-on-occamrazer-7e9eab947add",
         external: true,
       },
       { text: "Documentation", url: "https://nunet.io/#technology", external: true },
