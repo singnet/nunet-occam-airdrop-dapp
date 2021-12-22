@@ -53,13 +53,7 @@ export default function ScheduleEvent({
       <TimelineSeparator>
         <TimelineDot
           sx={{ width: 19, height: 19,borderColor:"common.white" }}
-          color={
-            isActiveEvent
-              ? "success"
-              : undefined || nextEvent()
-              ? undefined
-              : "primary"
-          }
+          color= "primary"
         />
         {!!nextEventTime ? (
           <TimelineConnector>
@@ -88,26 +82,14 @@ export default function ScheduleEvent({
             <Typography
               variant="h6"
               fontSize="18px"
-              color={
-                isActiveEvent
-                  ? "success.main"
-                  : "textAdvanced.grey" && nextEvent()
-                  ? "textAdvanced.grey"
-                  : "primary"
-              }
+              color="primary"
             >
               {formattedDate.split(",")[0]}
             </Typography>
             <Typography
               variant="h6"
               fontSize="18px"
-              color={
-                isActiveEvent
-                  ? "success.main"
-                  : "textAdvanced.grey" && nextEvent()
-                  ? "textAdvanced.grey"
-                  : "primary"
-              }
+              color="primary"
             >
               {formattedDate.split(",")[1]}
             </Typography>
@@ -117,13 +99,7 @@ export default function ScheduleEvent({
               
               variant="h6"
               fontSize="18px"
-              color={
-                isActiveEvent
-                  ? "secondary"
-                  : "textAdvanced.grey" && nextEvent()
-                  ? "textAdvanced.grey"
-                  : "primary"
-              }
+              color="primary"
               component="p"
             >
               {event.title}
