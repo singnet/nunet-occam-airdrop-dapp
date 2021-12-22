@@ -128,14 +128,12 @@ const Home: NextPage = () => {
 
   const handleScrollToView = (elemRef: RefObject<HTMLDivElement>) => {
     if (!elemRef) return;
-  
 
     const offsetTop = elemRef.current?.offsetTop;
     if (typeof offsetTop === "undefined") {
       return;
     }
     const offsetPosition = offsetTop - headerOffset;
-    
 
     window.scrollTo({ top: offsetPosition, behavior: "smooth" });
   };
