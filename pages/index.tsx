@@ -266,7 +266,7 @@ const HowItWorksSampleData = [
   {
     title: "About the NuNet Occam Airdrop",
     description:
-      "Welcome to the Airdrop Portal. This is the dApp where you can claim the last two 25% installments of the NuNet sale on OccamRazer.",
+      "This is the dApp where you can claim the remaining two 25% installments of the NuNet sale on OccamRazer.",
   },
   {
     title: "Schedule of the NuNet Occam airdrop",
@@ -276,7 +276,7 @@ const HowItWorksSampleData = [
   {
     title: "Process of claiming",
     description:
-      "The process is straightforward: after you connect your wallet you can navigate to Allocations  and claim the NTX tokens to your wallet.",
+      "The process is straightforward: after you connect your wallet you can claim the NTX tokens to your wallet.",
   },
   {
     title: "When you can claim",
