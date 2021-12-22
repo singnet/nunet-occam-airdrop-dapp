@@ -43,7 +43,7 @@ export default function AirdropRegistrationMini({
       sx={{ px: 2, pt: 2, pb: 2, borderRadius: 2 ,m:12,mt:5.5,mr:8}}
     >
       <Typography color="text.secondary" variant="h4" align="center" mb={6}>
-        Airdrop registration window {currentAirdropWindow}/{totalAirdropWindows}{" "}
+        Occam sale distribution {currentAirdropWindow}/{totalAirdropWindows}{" "}
         {windowAction} {formattedDate}
       </Typography>
       <FlipCountdown endDate={startDate} />
@@ -62,7 +62,7 @@ export default function AirdropRegistrationMini({
             Total Token Worth
           </Typography>
           <Typography variant="h3" color="text.secondary">
-            {totalTokens} {tokenName}
+          5,000,000 {tokenName}
           </Typography>
         </Grid>
       </Grid>
