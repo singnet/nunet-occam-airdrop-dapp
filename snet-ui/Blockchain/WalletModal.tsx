@@ -188,7 +188,7 @@ export default function WalletModal({ open, setOpen }: Props) {
             By connecting a wallet, you agree to our
             <Typography
               component="a"
-              href="./"
+              href="https://public.singularitynet.io/terms_and_conditions.html"
               color="secondary.main"
               variant="link"
               pl={1}
