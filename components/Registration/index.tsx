@@ -288,6 +288,7 @@ const Registration: FunctionComponent<RegistrationProps> = ({
         amount: claimAmount.toString(),
         airdrop_id: activeWindow?.airdrop_id?.toString(),
         airdrop_window_id: activeWindow?.airdrop_window_id?.toString(),
+        blockchain_method: blockChainActionTypes.STAKE_AND_CLAIM,
       });
       console.log("response.data", response.data);
     };
@@ -302,11 +303,7 @@ const Registration: FunctionComponent<RegistrationProps> = ({
         claimDetails.claimable_amount
       );
 
-      await saveClaimTxn(
-        txn.hash,
-        claimDetails.claimable_amount,
-        blockChainActionTypes.STAKE_AND_CLAIM
-      );
+      await saveClaimTxn(txn.hash, claimDetails.claimable_amount);
       setClaimStatus(ClaimStatus.PENDING);
       const receipt = await txn.wait();
       console.log("receipt", receipt);
@@ -409,18 +406,14 @@ const Registration: FunctionComponent<RegistrationProps> = ({
       }
     };
 
-    const saveClaimTxn = async (
-      txnHash: string,
-      claimAmount,
-      action: string
-    ) => {
+    const saveClaimTxn = async (txnHash: string, claimAmount) => {
       const response = await axios.post(API_PATHS.CLAIM_SAVE_TXN, {
         address: account,
         txn_hash: txnHash,
         amount: claimAmount.toString(),
         airdrop_id: activeWindow?.airdrop_id?.toString(),
         airdrop_window_id: activeWindow?.airdrop_window_id?.toString(),
-        action,
+        blockchain_method: blockChainActionTypes.CLAIM,
       });
       console.log("response.dat", response.data);
     };
@@ -435,11 +428,7 @@ const Registration: FunctionComponent<RegistrationProps> = ({
         claimDetails.claimable_amount
       );
 
-      await saveClaimTxn(
-        txn.hash,
-        claimDetails.claimable_amount,
-        blockChainActionTypes.CLAIM
-      );
+      await saveClaimTxn(txn.hash, claimDetails.claimable_amount);
       setClaimStatus(ClaimStatus.PENDING);
       const receipt = await txn.wait();
       console.log("receipt", receipt);
