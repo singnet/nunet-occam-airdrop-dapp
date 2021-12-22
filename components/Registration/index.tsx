@@ -288,6 +288,7 @@ const Registration: FunctionComponent<RegistrationProps> = ({
         amount: claimAmount.toString(),
         airdrop_id: activeWindow?.airdrop_id?.toString(),
         airdrop_window_id: activeWindow?.airdrop_window_id?.toString(),
+        blockchain_method: blockChainActionTypes.STAKE_AND_CLAIM,
       });
       console.log("response.data", response.data);
     };
@@ -302,11 +303,7 @@ const Registration: FunctionComponent<RegistrationProps> = ({
         claimDetails.claimable_amount
       );
 
-      await saveClaimTxn(
-        txn.hash,
-        claimDetails.claimable_amount,
-        blockChainActionTypes.STAKE_AND_CLAIM
-      );
+      await saveClaimTxn(txn.hash, claimDetails.claimable_amount);
       setClaimStatus(ClaimStatus.PENDING);
       const receipt = await txn.wait();
       console.log("receipt", receipt);
@@ -409,18 +406,14 @@ const Registration: FunctionComponent<RegistrationProps> = ({
       }
     };
 
-    const saveClaimTxn = async (
-      txnHash: string,
-      claimAmount,
-      action: string
-    ) => {
+    const saveClaimTxn = async (txnHash: string, claimAmount) => {
       const response = await axios.post(API_PATHS.CLAIM_SAVE_TXN, {
         address: account,
         txn_hash: txnHash,
         amount: claimAmount.toString(),
         airdrop_id: activeWindow?.airdrop_id?.toString(),
         airdrop_window_id: activeWindow?.airdrop_window_id?.toString(),
-        action,
+        blockchain_method: blockChainActionTypes.CLAIM,
       });
       console.log("response.dat", response.data);
     };
@@ -435,11 +428,7 @@ const Registration: FunctionComponent<RegistrationProps> = ({
         claimDetails.claimable_amount
       );
 
-      await saveClaimTxn(
-        txn.hash,
-        claimDetails.claimable_amount,
-        blockChainActionTypes.CLAIM
-      );
+      await saveClaimTxn(txn.hash, claimDetails.claimable_amount);
       setClaimStatus(ClaimStatus.PENDING);
       const receipt = await txn.wait();
       console.log("receipt", receipt);
@@ -524,7 +513,7 @@ const Registration: FunctionComponent<RegistrationProps> = ({
     return (
       <Grid container spacing={2} px={5} mt={2} mb={8}>
         <Grid item xs={12} sm={6}>
-          <Airdropinfo blogLink="www.google.com" />
+          <Airdropinfo blogLink="https://nunet-io.github.io/public/NuNet_Whitepaper_2.0.pdf" />
         </Grid>
         <Grid item xs={12} sm={6}>
           <AirdropRegistrationMini
@@ -616,7 +605,7 @@ const Registration: FunctionComponent<RegistrationProps> = ({
   ) : (
     <Grid container spacing={2} px={4} mt={2} mb={8}>
       <Grid item xs={12} sm={6}>
-        <Airdropinfo blogLink="www.google.com" />
+        <Airdropinfo blogLink="https://nunet-io.github.io/public/NuNet_Whitepaper_2.0.pdf" />
       </Grid>
       <Grid item xs={12} sm={6}>
         <AirdropRegistrationMini

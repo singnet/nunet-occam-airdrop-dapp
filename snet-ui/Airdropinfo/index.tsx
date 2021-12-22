@@ -8,17 +8,16 @@ type Props = {
 
 export default function Airdropinfo({ blogLink }: Props) {
   return (
-    <Box sx={{mr:3,m:5.5}}>
+    <Box>
       <Typography align="left" fontWeight="bold" variant="h1" color="bgtext.main">
-        Airdrop Information: Find out how to participate in the NuNet Occam Airdrop.
+        Occam Distribution: Claim your remaining allocations
       </Typography>
-      <Typography color="textAdvanced.dark" variant="subtitle1" sx={{ mt: 3, display: "block", textAlign: "left" }}>
-        Like all SingularityNET projects, NuNet has allocated 5% of its token supply for an airdrop to our loyal
-        followers and backers. You can find out here if you're eligible, and learn how to participate.
+      <Typography color="textAdvanced.dark" variant="normal" sx={{ mt: 3, display: "block", textAlign: "left" }}>
+        OccamRazer hosted the pre-IDO round for NuNet and at this portal you will be able to claim the two remaining 25% allocations.
       </Typography>
       {blogLink ? (
         <Box mt={6}>
-          <Button sx={{textTransform:"capitalize",fontWeight:600}} variant="outlined" color="secondary" href={blogLink} target="_blank" rel="noreferrer noopener">
+          <Button variant="outlined" color="secondary" href={blogLink} target="_blank" rel="noreferrer noopener">
             Read Whitepaper
           </Button>
         </Box>

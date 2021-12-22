@@ -52,14 +52,8 @@ export default function ScheduleEvent({
       <TimelineOppositeContent sx={{ display: "none" }} />
       <TimelineSeparator>
         <TimelineDot
-          sx={{ width: 19, height: 19 }}
-          color={
-            isActiveEvent
-              ? "success"
-              : undefined || nextEvent()
-              ? undefined
-              : "primary"
-          }
+          sx={{ width: 19, height: 19,borderColor:"common.white" }}
+          color= "primary"
         />
         {!!nextEventTime ? (
           <TimelineConnector>
@@ -87,44 +81,30 @@ export default function ScheduleEvent({
           <Grid item xs={4}>
             <Typography
               variant="h6"
-              color={
-                isActiveEvent
-                  ? "success.main"
-                  : "textAdvanced.grey" && nextEvent()
-                  ? "textAdvanced.grey"
-                  : "primary"
-              }
+              fontSize="18px"
+              color="primary"
             >
               {formattedDate.split(",")[0]}
             </Typography>
             <Typography
               variant="h6"
-              color={
-                isActiveEvent
-                  ? "success.main"
-                  : "textAdvanced.grey" && nextEvent()
-                  ? "textAdvanced.grey"
-                  : "primary"
-              }
+              fontSize="18px"
+              color="primary"
             >
               {formattedDate.split(",")[1]}
             </Typography>
           </Grid>
           <Grid item xs={8}>
             <Typography
-              variant="priority"
-              color={
-                isActiveEvent
-                  ? "secondary"
-                  : "textAdvanced.grey" && nextEvent()
-                  ? "textAdvanced.grey"
-                  : "primary"
-              }
+              
+              variant="h6"
+              fontSize="18px"
+              color="primary"
               component="p"
             >
               {event.title}
             </Typography>
-            <Typography variant="normal" color="textAdvanced.primary">
+            <Typography variant="normal" fontSize="14px" color="textAdvanced.primary">
               {event.description}
             </Typography>
           </Grid>

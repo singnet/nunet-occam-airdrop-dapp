@@ -90,7 +90,7 @@ const Home: NextPage = () => {
       );
 
       const airdropSchedules = airdropTimelines.flat().map((timeline) => ({
-        time: new Date(timeline.airdrop_window_timeline_date),
+        time: new Date(timeline.airdrop_window_timeline_date + " UTC"),
         title: timeline.airdrop_window_timeline_info,
         description: timeline.airdrop_window_timeline_description,
       }));
@@ -128,14 +128,12 @@ const Home: NextPage = () => {
 
   const handleScrollToView = (elemRef: RefObject<HTMLDivElement>) => {
     if (!elemRef) return;
-  
 
     const offsetTop = elemRef.current?.offsetTop;
     if (typeof offsetTop === "undefined") {
       return;
     }
     const offsetPosition = offsetTop - headerOffset;
-    
 
     window.scrollTo({ top: offsetPosition, behavior: "smooth" });
   };
@@ -266,7 +264,7 @@ const HowItWorksSampleData = [
   {
     title: "About the NuNet Occam Airdrop",
     description:
-      "Welcome to the Airdrop Portal. This is the dApp where you can claim the last two 25% installments of the NuNet sale on OccamRazer.",
+      "This is the dApp where you can claim the remaining two 25% installments of the NuNet sale on OccamRazer.",
   },
   {
     title: "Schedule of the NuNet Occam airdrop",
@@ -276,7 +274,7 @@ const HowItWorksSampleData = [
   {
     title: "Process of claiming",
     description:
-      "The process is straightforward: after you connect your wallet you can navigate to Allocations  and claim the NTX tokens to your wallet.",
+      "The process is straightforward: after you connect your wallet you can claim the NTX tokens to your wallet.",
   },
   {
     title: "When you can claim",

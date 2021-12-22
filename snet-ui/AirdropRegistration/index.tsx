@@ -18,6 +18,7 @@ import Grid from "@mui/material/Grid";
 import { isDateBetween, isDateGreaterThan } from "utils/date";
 import Staketype from "snet-ui/AirdropRegistration/Staketype";
 import axios from "utils/Axios";
+import Container from "@mui/material/Container";
 
 import { API_PATHS } from "utils/constants/ApiPaths";
 
@@ -228,7 +229,7 @@ export default function AirdropRegistration({
           <Grid container spacing={2} sx={{ marginTop: 2 }}>
             <Grid item xs={6}>
               <Link
-                href={`https://google.com`}
+                href={`https://singularitynet.io/`}
                 target="_blank"
                 rel="noreferrer"
               >
@@ -271,18 +272,31 @@ export default function AirdropRegistration({
                 : ""
             }
           />
-          <Typography color="text.secondary" variant="h4" align="center" mb={1}>
-            Airdrop {windowName} window &nbsp;
-            {currentWindowId} / {totalWindows} &nbsp;
-            {windowAction}:
-          </Typography>
-          <Typography color="text.secondary" variant="h4" align="center" mb={6}>
-            {formattedDate}
-          </Typography>
+          <Container sx={{ my: 6 }}>
+            <Typography
+              color="text.secondary"
+              variant="h4"
+              align="center"
+              mb={1}
+            >
+              Airdrop {windowName} window &nbsp;
+              {currentWindowId} / {totalWindows} &nbsp;
+              {windowAction}:
+            </Typography>
+            <Typography
+              color="text.secondary"
+              variant="h4"
+              align="center"
+              mb={6}
+            >
+              {formattedDate}
+            </Typography>
+          </Container>
+
           <FlipCountdown endDate={endDate} />
           {airdropWindowStatus === WindowStatus.CLAIM && isClaimActive ? (
             <>
-              <Box sx={{ mt: 6, mb: 4 }}>
+              <Box sx={{ mt: 6 }}>
                 <Typography
                   variant="subtitle1"
                   align="center"
@@ -292,23 +306,19 @@ export default function AirdropRegistration({
                   Airdrop window {currentWindowId} / {totalWindows} rewards
                 </Typography>
                 <Typography
-                  variant="h3"
+                  variant="h2"
                   color="textAdvanced.secondary"
                   align="center"
-                  sx={{ mt: 0.8 }}
                 >
                   {airdropWindowTotalTokens}
                 </Typography>
               </Box>
-              <Box
+              <Container
+                maxWidth="md"
                 sx={{
                   my: 8,
-
-                  mx: 28,
-
                   display: "flex",
                   border: 0.3,
-
                   bgcolor: "note.main",
                   borderRadius: 1,
                   borderColor: "note.main",
@@ -327,10 +337,10 @@ export default function AirdropRegistration({
                     claim your tokens at each window claim time.
                   </Typography>
                 </Box>
-              </Box>
+              </Container>
             </>
           ) : null}
-          <Box sx={{ px: 2, mx: 26, borderColor: "error.main" }}>
+          <Box sx={{ borderColor: "error.main" }}>
             {uiAlert.message ? (
               <Alert severity={uiAlert.type} sx={{ mt: 2 }}>
                 {uiAlert.message}
