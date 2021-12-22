@@ -9,6 +9,7 @@ import axios from "utils/Axios";
 import Alert from "@mui/material/Alert";
 import { API_PATHS } from "utils/constants/ApiPaths";
 import LoadingButton from "snet-ui/LoadingButton";
+import Container from "@mui/material/Container";
 
 const categories = ["Airdrop Enquiry"];
 const alertTypes: any = {
@@ -95,15 +96,11 @@ export default function ContactUs() {
 
   return (
     <CommonLayout>
-      <Box >
+      <Box>
         <Typography align="center" color="primary" variant="h2">
           Contact Us
         </Typography>
-        <Box sx={{
-          m:43,mt:4,mb:5,
-          height:"394px",
-          width:"629px"
-          }}>
+        <Container>
           <Grid container sx={{ my: 3 }} spacing={2}>
             <Grid item xs={12} sm={6}>
               <TextField
@@ -169,18 +166,18 @@ export default function ContactUs() {
           {alertMessage.value.trim() ? (
             <Alert severity={alertMessage.severity}>{alertMessage.value}</Alert>
           ) : null}
-          <Box display="flex" justifyContent="center" sx={{mt:2}}>
+          <Box display="flex" justifyContent="center" sx={{ my: 2 }}>
             <LoadingButton
               variant="contained"
               color="secondary"
               onClick={handleSubmit}
               loading={submittingForm}
-              sx={{textTransform:"capitalize"}}
+              sx={{ textTransform: "capitalize" }}
             >
               Contact
             </LoadingButton>
           </Box>
-        </Box>
+        </Container>
       </Box>
     </CommonLayout>
   );
