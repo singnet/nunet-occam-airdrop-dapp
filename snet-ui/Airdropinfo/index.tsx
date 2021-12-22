@@ -10,10 +10,10 @@ export default function Airdropinfo({ blogLink }: Props) {
   return (
     <Box>
       <Typography align="left" fontWeight="bold" variant="h1" color="bgtext.main">
-        NuNet sale on OccamRazer
+        Occam Distribution: Claim your remaining allocations
       </Typography>
       <Typography color="textAdvanced.dark" variant="normal" sx={{ mt: 3, display: "block", textAlign: "left" }}>
-        Welcome to the Airdrop Portal. This is the dApp where you can claim the last two 25% installments of the NuNet sale on OccamRazer
+        OccamRazer hosted the pre-IDO round for NuNet and at this portal you will be able to claim the two remaining 25% allocations.
       </Typography>
       {blogLink ? (
         <Box mt={6}>
