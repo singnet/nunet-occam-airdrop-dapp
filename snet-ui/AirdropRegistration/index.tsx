@@ -50,6 +50,7 @@ type AirdropRegistrationProps = {
   uiAlert: { type: AlertColor; message: string };
   activeWindow?: AirdropWindow;
   stakeInfo: StakeInfo;
+  airdropWindowrewards: number;
 };
 
 const DateFormatter = new Intl.DateTimeFormat("en-GB", {
@@ -109,6 +110,7 @@ export default function AirdropRegistration({
   airdropWindowStatus,
   uiAlert,
   activeWindow,
+  airdropWindowrewards,
 }: AirdropRegistrationProps) {
   const [registrationLoader, setRegistrationLoader] = useState(false);
   const [claimLoader, setClaimLoader] = useState(false);
@@ -310,7 +312,7 @@ export default function AirdropRegistration({
                   color="textAdvanced.secondary"
                   align="center"
                 >
-                  {airdropWindowTotalTokens}
+                  {airdropWindowrewards}
                 </Typography>
               </Box>
               <Container

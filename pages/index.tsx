@@ -54,6 +54,8 @@ const Home: NextPage = () => {
   );
   const [rejectReasons, setRejectReasons] = useState<string | undefined>("");
   const [userRegistered, setUserRegistered] = useState(false);
+  const [airdropWindowRules, setWindowRules] = useState([]);
+  const [airdropWindowRewards, setAirdropwindowRewards] = useState(0);
   const [userClaimStatus, setUserClaimStatus] = useState<ClaimStatus>(
     ClaimStatus.NOT_STARTED
   );
@@ -174,8 +176,11 @@ const Home: NextPage = () => {
       const claimStatus = data.airdrop_window_claim_status;
       const isRegistered = data.is_already_registered;
       const reasonForRejection = data.reject_reason;
+      const airdropRewards = data.airdrop_window_rewards;
       const rules = data.airdrop_rules;
 
+      setAirdropRules(rules);
+      setAirdropwindowRewards(airdropRewards);
       setUserEligibility(
         isEligible ? UserEligibility.ELIGIBLE : UserEligibility.NOT_ELIGIBLE
       );
@@ -234,6 +239,7 @@ const Home: NextPage = () => {
         airdropTotalTokens={airdropTotalTokens}
         claimStatus={userClaimStatus}
         setClaimStatus={setUserClaimStatus}
+        airdropWindowrewards={airdropWindowRewards}
       />
       <HowItWorks
         ref={howitworksRef}
