@@ -436,17 +436,19 @@ export default function AirdropRegistration({
               </>
             )}
           </Box>
+
           {history && history.length > 0 ? (
-            <Container maxWidth="md">
+            <Box>
               <Typography
                 align="center"
                 color="textAdvanced.secondary"
                 variant="h5"
+                mt={6}
               >
                 Your Airdrop History
               </Typography>
               <History events={history} />
-            </Container>
+            </Box>
           ) : null}
         </GradientBox>
       </Box>
