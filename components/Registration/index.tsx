@@ -60,6 +60,7 @@ interface RegistrationProps {
   claimStatus: ClaimStatus;
   setClaimStatus: (value: ClaimStatus) => void;
   airdropTotalTokens: { value: number; name: string };
+  airdropWindowrewards: number;
 }
 
 // const airdropOpensIn = new Date();
@@ -75,6 +76,7 @@ const Registration: FunctionComponent<RegistrationProps> = ({
   claimStatus,
   setClaimStatus,
   airdropTotalTokens,
+  airdropWindowrewards,
 }) => {
   const [stakeDetails, setStakeDetails] = useState<any>({ isStakable: false });
   const [windowAction, setWindowAction] = useState<string>("");
@@ -600,6 +602,7 @@ const Registration: FunctionComponent<RegistrationProps> = ({
         airdropWindowStatus={activeWindow.airdrop_window_status}
         uiAlert={uiAlert}
         activeWindow={activeWindow}
+        airdropWindowrewards={airdropWindowrewards}
       />
     </Box>
   ) : (
