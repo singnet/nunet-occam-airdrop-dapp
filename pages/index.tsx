@@ -217,7 +217,7 @@ const Home: NextPage = () => {
       <Head>
         <title>Nunet Occam</title>
       </Head>
-      <Box px={[0, 4, 15]} mt={15}>
+      <Box px={[0, 4, 15]} mt={18}>
         <EligibilityBanner
           userEligibility={userEligibility}
           onViewRules={() => handleScrollToView(rulesRef)}
