@@ -334,9 +334,8 @@ export default function AirdropRegistration({
                     sx={{ mx: 1, fontSize: 16 }}
                   >
                     You can start claiming your tokens now. It is possible to
-                    claim all tokens with the last airdrop window which allow
-                    you save on the gas cost fees. However we recommend you
-                    claim your tokens at each window claim time.
+                    claim all tokens with the last window which will 
+                    save you gas fees.
                   </Typography>
                 </Box>
               </Container>
