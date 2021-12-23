@@ -74,10 +74,9 @@ export default function Success({
                 <InfoIcon color="primary" />
                 <Typography variant="body2" color="textAdvanced.primary">
                   You can start claiming your tokens for Airdrop from{" "}
-                  {claimStartDate}. It is possible to claim all tokens with the
-                  last airdrop window which allow you save on the gas cost fees.
-                  However we recommend you claim your tokens at each window
-                  claim time.
+                  {claimStartDate}. It is possible to
+                  claim all tokens with the last window which will 
+                  save you gas fees.
                 </Typography>
               </Box>
             </Box>
