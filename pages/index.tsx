@@ -212,14 +212,12 @@ const Home: NextPage = () => {
     [activeWindow]
   );
 
-  console.log("activeWindow", activeWindow, airdropWindowClosingTime);
-
   return (
     <CommonLayout handleScrollToLink={handleScrollToLink}>
       <Head>
-        <title>Airdrop</title>
+        <title>Nunet Occam</title>
       </Head>
-      <Box px={[0, 4, 15]} mt={3}>
+      <Box px={[0, 4, 15]} mt={18}>
         <EligibilityBanner
           userEligibility={userEligibility}
           onViewRules={() => handleScrollToView(rulesRef)}
@@ -237,7 +235,6 @@ const Home: NextPage = () => {
         claimStatus={userClaimStatus}
         setClaimStatus={setUserClaimStatus}
       />
-
       <HowItWorks
         ref={howitworksRef}
         title="How NuNet Occam Airdrop works"
@@ -248,12 +245,9 @@ const Home: NextPage = () => {
         ref={getNotificationRef}
         onSubscribe={handleNotificationSubscription}
       />
-      
 
       <AirdropSchedules ref={scheduleRef} schedules={schedules} />
       <Ecosystem blogLink="https://singularitynet.io/" />
-
-      
     </CommonLayout>
   );
 };
@@ -281,5 +275,4 @@ const HowItWorksSampleData = [
     description:
       "You can choose to claim both allocations at once after the second allocation unlocks on January 26th, to save gas fees.",
   },
-  
 ];
