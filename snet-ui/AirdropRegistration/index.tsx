@@ -305,14 +305,14 @@ export default function AirdropRegistration({
                   component="p"
                   color="text.secondary"
                 >
-                  Airdrop window {currentWindowId} / {totalWindows} rewards
+                  Tokens available to claim
                 </Typography>
                 <Typography
                   variant="h2"
                   color="textAdvanced.secondary"
                   align="center"
                 >
-                  {airdropWindowrewards}
+                  {airdropWindowrewards/1000000} NTX
                 </Typography>
               </Box>
               <Container
