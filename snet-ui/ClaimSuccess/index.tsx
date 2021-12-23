@@ -54,24 +54,6 @@ export default function ClaimSuccess({
                 {totalWindows}
               </Typography>
             </Box>
-            <Box
-              sx={{
-                display: "flex",
-                justifyContent: "center",
-                my: 4,
-                height: "108px",
-                width: "620px",
-                bgcolor: "note.main",
-              }}
-            >
-              <Box sx={{ display: "flex", my: 1, py: 1, m: 1 }}>
-                <InfoIcon color="primary" />
-                <Typography variant="body1" color="textAdvanced.primary">
-                  To be eligible for the next airdrop, you need to register when
-                  window opens. The next window opens from 01 November 2021.
-                </Typography>
-              </Box>
-            </Box>
             <Box sx={{ m: 8, my: 2, py: 2 }}>
               <Stack spacing={3} direction="row">
                 <Button variant="outlined" onClick={onViewNotification} sx={{textTransform:"capitalize",fontWeight:600}}>
@@ -83,11 +65,6 @@ export default function ClaimSuccess({
                 <Button variant="outlined" onClick={onViewSchedule} sx={{textTransform:"capitalize",fontWeight:600}}>
                   <Typography color="text.secondary" fontSize="14px">
                     View Schedule
-                  </Typography>
-                </Button>
-                <Button variant="outlined" onClick={onViewRules} sx={{textTransform:"capitalize",fontWeight:600}}>
-                  <Typography color="text.secondary" fontSize="14px">
-                    View Rules
                   </Typography>
                 </Button>
               </Stack>
