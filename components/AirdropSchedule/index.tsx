@@ -3,6 +3,7 @@ import axios from "utils/Axios";
 import Schedule from "snet-ui/Schedule";
 import Box from "@mui/material/Box";
 import { API_PATHS } from "utils/constants/ApiPaths";
+import Container from "@mui/material/Container";
 
 type scheduleEvent = { time: Date; title: string; description: string };
 type AirdropProps = {
