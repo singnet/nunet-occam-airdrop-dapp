@@ -262,7 +262,7 @@ export default Home;
 
 const HowItWorksSampleData = [
   {
-    title: "Participate in the OccamRazer IDO , Nov 25th 2021",
+    title: "Participate in the OccamRazer IDO",
     description:
       "If you have participated in the OccamRazer round, you can claim the vested allocations here, in two installments of 25%.",
   },
