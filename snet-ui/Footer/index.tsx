@@ -106,10 +106,10 @@ export default function Footer({ handleScrollToLink }: FooterProps) {
 
 const LinksData = [
   {
-    header: "Airdrop",
+    header: "Vesting",
     links: [
       {
-        text: "How Airdrop Works",
+        text: "How Vesting Works",
 
         scrollToKey: "howitworks",
       },
