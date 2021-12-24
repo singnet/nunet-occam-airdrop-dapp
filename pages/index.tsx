@@ -243,7 +243,7 @@ const Home: NextPage = () => {
       />
       <HowItWorks
         ref={howitworksRef}
-        title="How NuNet Occam Airdrop works"
+        title="Claiming you NTX allocation of the OccamRazer launch."
         steps={HowItWorksSampleData}
         blogLink="https://medium.com/occam-finance/nunet-backed-by-singularitynet-to-hold-ido-on-occamrazer-7e9eab947add"
       />

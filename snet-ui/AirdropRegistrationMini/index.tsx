@@ -43,7 +43,7 @@ export default function AirdropRegistrationMini({
       sx={{ px: 2, pt: 2, pb: 2, borderRadius: 2 }}
     >
       <Typography color="text.secondary" variant="h4" align="center" mb={6}>
-        Occam sale distribution {currentAirdropWindow}/{totalAirdropWindows}{" "}
+        OccamRazer vested unlock {currentAirdropWindow}/{totalAirdropWindows}{" "}
         {windowAction} {formattedDate}
       </Typography>
       <FlipCountdown endDate={startDate} />
@@ -51,7 +51,7 @@ export default function AirdropRegistrationMini({
       <Grid container>
         <Grid item xs={6} textAlign="center">
           <Typography variant="normal" color="text.secondary">
-            Airdrop
+            Unlocks
           </Typography>
           <Typography variant="h3" color="text.secondary">
             {totalAirdropWindows}
