@@ -53,7 +53,7 @@ export default function ClaimSuccess({
                 variant="h5"
                 color="text.secondary"
               >
-                Successfully Claimed for Airdrop Window {currentWindowId}/
+                Successfully Claimed for Vesting Window {currentWindowId}/
                 {totalWindows}
               </Typography>
             </Box>
