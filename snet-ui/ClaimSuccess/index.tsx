@@ -89,7 +89,7 @@ export default function ClaimSuccess({
               color="textAdvanced.secondary"
               variant="h5"
             >
-              Your Airdrop History
+              Your Vesting History
             </Typography>
             <History events={history} />
           </Container>
