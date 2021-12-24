@@ -57,7 +57,7 @@ export default function EligibilityBanner({
     >
       <Grid container spacing={2}>
         <Grid item xs={12} md={6}>
-          <Typography variant="normal">Airdrop Eligibility</Typography>
+          <Typography variant="normal">Vesting Eligibility</Typography>
 
           <Box sx={{ display: "flex", alignItems: "center", mt: 1 }}>
             <Box color="success" sx={{ mr: 1, mt: 1 }}>
@@ -65,7 +65,7 @@ export default function EligibilityBanner({
             </Box>
 
             <Typography variant="h5" color="primary.main">
-              Qualified for Airdrop Window {activeWindow.airdrop_window_order} /{" "}
+              Qualified for Vesting Window {activeWindow.airdrop_window_order} /{" "}
               {totalWindows}
             </Typography>
           </Box>

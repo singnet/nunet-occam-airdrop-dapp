@@ -52,7 +52,7 @@ export default function Success({
                 variant="h5"
                 color="text.secondary"
               >
-                Successfully Registered for Airdrop Window {windowId} /{" "}
+                Successfully Registered for Vesting Window {windowId} /{" "}
                 {totalWindows}
               </Typography>
             </Box>
@@ -73,7 +73,7 @@ export default function Success({
               <Box sx={{ display: "flex", my: 1, py: 1, m: 1 }}>
                 <InfoIcon color="primary" />
                 <Typography variant="body2" color="textAdvanced.primary">
-                  You can start claiming your tokens for Airdrop from{" "}
+                  You can start claiming your tokens for Vesting from{" "}
                   {claimStartDate}. It is possible to
                   claim all tokens with the last window which will 
                   save you gas fees.
