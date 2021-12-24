@@ -78,7 +78,7 @@ const windowStatusActionMap = {
 };
 
 const statusLabelMap = {
-  [WindowStatus.CLAIM]: "Claim Open",
+  [WindowStatus.CLAIM]: "Vesting Open",
   [WindowStatus.REGISTRATION]: "Registration Open",
   [WindowStatus.UPCOMING]: "",
 };
@@ -281,7 +281,7 @@ export default function AirdropRegistration({
               align="center"
               mb={1}
             >
-              Airdrop {windowName} window &nbsp;
+              Vesting {windowName} window &nbsp;
               {currentWindowId} / {totalWindows} &nbsp;
               {windowAction}:
             </Typography>
@@ -442,7 +442,7 @@ export default function AirdropRegistration({
                 color="textAdvanced.secondary"
                 variant="h5"
               >
-                Your Airdrop History
+                Your Vesting History
               </Typography>
               <History events={history} />
             </Container>
