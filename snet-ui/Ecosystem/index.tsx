@@ -49,7 +49,7 @@ export default function Ecosystem({ blogLink }: Props) {
                 Visit SingularityNet
               </Button>
             ) : null}
-            {blogLink ? (
+            {/* {blogLink ? (
               <Button
                 sx={{ textTransform: "capitalize", fontWeight: 600 }}
                 variant="outlined"
@@ -61,7 +61,7 @@ export default function Ecosystem({ blogLink }: Props) {
               >
                 View All Airdrops
               </Button>
-            ) : null}
+            ) : null} */}
           </Stack>
         </Box>
       </Box>
