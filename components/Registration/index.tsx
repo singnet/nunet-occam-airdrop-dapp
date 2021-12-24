@@ -189,7 +189,9 @@ const Registration: FunctionComponent<RegistrationProps> = ({
     const history = response.data.data.claim_history.map((el) => [
       {
         label: `Vesting ${el.airdrop_window_id} Rewards`,
-        value: `${el.claimable_amount / 1000000} ${airdropTotalTokens.name}`,
+        value: `${Number(el.claimable_amount) / 1000000} ${
+          airdropTotalTokens.name
+        }`,
       },
       {
         label: `Vesting ${el.airdrop_window_id} ${el.action_type} status`,
