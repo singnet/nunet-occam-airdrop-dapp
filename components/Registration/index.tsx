@@ -60,6 +60,7 @@ interface RegistrationProps {
   claimStatus: ClaimStatus;
   setClaimStatus: (value: ClaimStatus) => void;
   airdropTotalTokens: { value: number; name: string };
+  airdropWindowrewards: number;
 }
 
 // const airdropOpensIn = new Date();
@@ -75,6 +76,7 @@ const Registration: FunctionComponent<RegistrationProps> = ({
   claimStatus,
   setClaimStatus,
   airdropTotalTokens,
+  airdropWindowrewards,
 }) => {
   const [stakeDetails, setStakeDetails] = useState<any>({ isStakable: false });
   const [windowAction, setWindowAction] = useState<string>("");
@@ -186,19 +188,13 @@ const Registration: FunctionComponent<RegistrationProps> = ({
 
     const history = response.data.data.claim_history.map((el) => [
       {
-        label: `Window ${el.airdrop_window_id} Qualified`,
-        value: el.is_eligible ? "YES" : "NO",
+        label: `Vesting ${el.airdrop_window_id} Rewards`,
+        value: `${Number(el.claimable_amount) / 1000000} ${
+          airdropTotalTokens.name
+        }`,
       },
       {
-        label: `Window ${el.airdrop_window_id} Registration`,
-        value: el.registered_at,
-      },
-      {
-        label: `Window ${el.airdrop_window_id} Rewards`,
-        value: `${el.claimable_amount} ${airdropTotalTokens.name}`,
-      },
-      {
-        label: `Window ${el.airdrop_window_id} ${el.action}`,
+        label: `Vesting ${el.airdrop_window_id} ${el.action_type} status`,
         value: `${el.txn_status}`,
       },
     ]);
@@ -509,6 +505,7 @@ const Registration: FunctionComponent<RegistrationProps> = ({
   if (!activeWindow) {
     return null;
   }
+
   if (!account && (activeWindow !== null || activeWindow !== undefined)) {
     return (
       <Grid container spacing={2} px={5} mt={2} mb={8}>
@@ -557,6 +554,7 @@ const Registration: FunctionComponent<RegistrationProps> = ({
           onViewNotification={onViewNotification}
           currentWindowId={activeWindow?.airdrop_window_order}
           totalWindows={totalWindows}
+          history={airdropHistory}
         />
       </Box>
     );
@@ -600,6 +598,7 @@ const Registration: FunctionComponent<RegistrationProps> = ({
         airdropWindowStatus={activeWindow.airdrop_window_status}
         uiAlert={uiAlert}
         activeWindow={activeWindow}
+        airdropWindowrewards={airdropWindowrewards}
       />
     </Box>
   ) : (

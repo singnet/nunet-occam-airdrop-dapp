@@ -50,6 +50,7 @@ type AirdropRegistrationProps = {
   uiAlert: { type: AlertColor; message: string };
   activeWindow?: AirdropWindow;
   stakeInfo: StakeInfo;
+  airdropWindowrewards: number;
 };
 
 const DateFormatter = new Intl.DateTimeFormat("en-GB", {
@@ -109,6 +110,7 @@ export default function AirdropRegistration({
   airdropWindowStatus,
   uiAlert,
   activeWindow,
+  airdropWindowrewards,
 }: AirdropRegistrationProps) {
   const [registrationLoader, setRegistrationLoader] = useState(false);
   const [claimLoader, setClaimLoader] = useState(false);
@@ -303,14 +305,14 @@ export default function AirdropRegistration({
                   component="p"
                   color="text.secondary"
                 >
-                  Airdrop window {currentWindowId} / {totalWindows} rewards
+                  Tokens available to claim
                 </Typography>
                 <Typography
                   variant="h2"
                   color="textAdvanced.secondary"
                   align="center"
                 >
-                  {airdropWindowTotalTokens}
+                  {airdropWindowrewards/1000000} NTX
                 </Typography>
               </Box>
               <Container
@@ -332,9 +334,8 @@ export default function AirdropRegistration({
                     sx={{ mx: 1, fontSize: 16 }}
                   >
                     You can start claiming your tokens now. It is possible to
-                    claim all tokens with the last airdrop window which allow
-                    you save on the gas cost fees. However we recommend you
-                    claim your tokens at each window claim time.
+                    claim all tokens with the last window which will 
+                    save you gas fees.
                   </Typography>
                 </Box>
               </Container>
@@ -434,19 +435,17 @@ export default function AirdropRegistration({
               </>
             )}
           </Box>
-
           {history && history.length > 0 ? (
-            <Box>
+            <Container maxWidth="md">
               <Typography
                 align="center"
                 color="textAdvanced.secondary"
                 variant="h5"
-                mt={6}
               >
                 Your Airdrop History
               </Typography>
               <History events={history} />
-            </Box>
+            </Container>
           ) : null}
         </GradientBox>
       </Box>

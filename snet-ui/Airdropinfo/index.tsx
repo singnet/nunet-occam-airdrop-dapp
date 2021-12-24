@@ -10,10 +10,10 @@ export default function Airdropinfo({ blogLink }: Props) {
   return (
     <Box>
       <Typography align="left" fontWeight="bold" variant="h1" color="bgtext.main">
-        Occam Distribution: Claim your remaining allocations
+          OccamRazer allocations of the NuNet TGE Public Round
       </Typography>
       <Typography color="textAdvanced.dark" variant="normal" sx={{ mt: 3, display: "block", textAlign: "left" }}>
-        OccamRazer hosted the pre-IDO round for NuNet and at this portal you will be able to claim the two remaining 25% allocations.
+          If you have participated in the OccamRazer launch, you can claim your two vested allocations here.
       </Typography>
       {blogLink ? (
         <Box mt={6}>

@@ -54,6 +54,8 @@ const Home: NextPage = () => {
   );
   const [rejectReasons, setRejectReasons] = useState<string | undefined>("");
   const [userRegistered, setUserRegistered] = useState(false);
+  const [airdropWindowRules, setWindowRules] = useState([]);
+  const [airdropWindowRewards, setAirdropwindowRewards] = useState(0);
   const [userClaimStatus, setUserClaimStatus] = useState<ClaimStatus>(
     ClaimStatus.NOT_STARTED
   );
@@ -174,8 +176,11 @@ const Home: NextPage = () => {
       const claimStatus = data.airdrop_window_claim_status;
       const isRegistered = data.is_already_registered;
       const reasonForRejection = data.reject_reason;
+      const airdropRewards = data.airdrop_window_rewards;
       const rules = data.airdrop_rules;
 
+      setAirdropRules(rules);
+      setAirdropwindowRewards(airdropRewards);
       setUserEligibility(
         isEligible ? UserEligibility.ELIGIBLE : UserEligibility.NOT_ELIGIBLE
       );
@@ -212,14 +217,12 @@ const Home: NextPage = () => {
     [activeWindow]
   );
 
-  console.log("activeWindow", activeWindow, airdropWindowClosingTime);
-
   return (
     <CommonLayout handleScrollToLink={handleScrollToLink}>
       <Head>
-        <title>Airdrop</title>
+        <title>Nunet Occam</title>
       </Head>
-      <Box px={[0, 4, 15]} mt={3}>
+      <Box px={[0, 4, 15]} mt={18}>
         <EligibilityBanner
           userEligibility={userEligibility}
           onViewRules={() => handleScrollToView(rulesRef)}
@@ -236,11 +239,11 @@ const Home: NextPage = () => {
         airdropTotalTokens={airdropTotalTokens}
         claimStatus={userClaimStatus}
         setClaimStatus={setUserClaimStatus}
+        airdropWindowrewards={airdropWindowRewards}
       />
-
       <HowItWorks
         ref={howitworksRef}
-        title="How NuNet Occam Airdrop works"
+        title="Claiming your NTX allocation of the OccamRazer launch."
         steps={HowItWorksSampleData}
         blogLink="https://medium.com/occam-finance/nunet-backed-by-singularitynet-to-hold-ido-on-occamrazer-7e9eab947add"
       />
@@ -248,12 +251,9 @@ const Home: NextPage = () => {
         ref={getNotificationRef}
         onSubscribe={handleNotificationSubscription}
       />
-      
 
       <AirdropSchedules ref={scheduleRef} schedules={schedules} />
       <Ecosystem blogLink="https://singularitynet.io/" />
-
-      
     </CommonLayout>
   );
 };
@@ -262,12 +262,12 @@ export default Home;
 
 const HowItWorksSampleData = [
   {
-    title: "About the NuNet Occam Airdrop",
+    title: "Participate in the OccamRazer IDO",
     description:
-      "This is the dApp where you can claim the remaining two 25% installments of the NuNet sale on OccamRazer.",
+      "If you have participated in the OccamRazer round, you can claim the vested allocations here, in two installments of 25%.",
   },
   {
-    title: "Schedule of the NuNet Occam airdrop",
+    title: "OccamRazer vesting schedule",
     description:
       "The two remaining distributions will unlock on December 26th 2021, 13:00 UTC and January 26th 2022, 13:00 UTC.",
   },
@@ -277,9 +277,8 @@ const HowItWorksSampleData = [
       "The process is straightforward: after you connect your wallet you can claim the NTX tokens to your wallet.",
   },
   {
-    title: "When you can claim",
+    title: "Final claim",
     description:
-      "You can choose to claim both allocations at once after the second allocation unlocks on January 26th, to save gas fees.",
+      "You can claim your allocations until 3 months after the last unlock. The final claim date is April 26th 13:00 UTC. You can claim both unlocked allocations at once, to save gas fees.",
   },
-  
 ];
