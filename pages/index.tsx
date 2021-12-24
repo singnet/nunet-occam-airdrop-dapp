@@ -43,6 +43,8 @@ const Home: NextPage = () => {
   const { t } = useTranslation("common");
   const { account } = useActiveWeb3React();
   const rulesRef = useRef<HTMLDivElement>(null);
+  const howitworksRef = useRef<HTMLDivElement>(null);
+  const faqRef = useRef<HTMLDivElement>(null);
   const scheduleRef = useRef<HTMLDivElement>(null);
   const getNotificationRef = useRef<HTMLDivElement>(null);
   const [schedules, setSchedules] = useState<any[] | undefined>(undefined);
@@ -52,6 +54,8 @@ const Home: NextPage = () => {
   );
   const [rejectReasons, setRejectReasons] = useState<string | undefined>("");
   const [userRegistered, setUserRegistered] = useState(false);
+  const [airdropWindowRules, setWindowRules] = useState([]);
+  const [airdropWindowRewards, setAirdropwindowRewards] = useState(0);
   const [userClaimStatus, setUserClaimStatus] = useState<ClaimStatus>(
     ClaimStatus.NOT_STARTED
   );
@@ -78,9 +82,9 @@ const Home: NextPage = () => {
 
   const getAirdropSchedule = async () => {
     try {
-      const airdropTokenAddress = process.env.NEXT_PUBLIC_AIRDROP_TOKEN_ADDRESS;
+      const airdropId = process.env.NEXT_PUBLIC_AIRDROP_ID;
       const data: any = await axios.get(
-        `${API_PATHS.AIRDROP_SCHEDULE}/${airdropTokenAddress}`
+        `${API_PATHS.AIRDROP_SCHEDULE}/${airdropId}`
       );
       const airdrop = data.data.data;
       const airdropTimelines = airdrop.airdrop_windows.map(
@@ -88,7 +92,7 @@ const Home: NextPage = () => {
       );
 
       const airdropSchedules = airdropTimelines.flat().map((timeline) => ({
-        time: new Date(timeline.airdrop_window_timeline_date),
+        time: new Date(timeline.airdrop_window_timeline_date + " UTC"),
         title: timeline.airdrop_window_timeline_info,
         description: timeline.airdrop_window_timeline_description,
       }));
@@ -126,9 +130,25 @@ const Home: NextPage = () => {
 
   const handleScrollToView = (elemRef: RefObject<HTMLDivElement>) => {
     if (!elemRef) return;
-    const elemPosition = elemRef.current?.getBoundingClientRect().top as number;
-    const offsetPosition = elemPosition - headerOffset;
+
+    const offsetTop = elemRef.current?.offsetTop;
+    if (typeof offsetTop === "undefined") {
+      return;
+    }
+    const offsetPosition = offsetTop - headerOffset;
+
     window.scrollTo({ top: offsetPosition, behavior: "smooth" });
+  };
+  const handleScrollToLink = (scrollToKey?: string) => {
+    if (scrollToKey === "schedule") {
+      handleScrollToView(scheduleRef);
+    } else if (scrollToKey === "faq") {
+      handleScrollToView(faqRef);
+    } else if (scrollToKey === "howitworks") {
+      handleScrollToView(howitworksRef);
+    } else if (scrollToKey === "rules") {
+      handleScrollToView(rulesRef);
+    }
   };
 
   const getUserEligibility = async () => {
@@ -156,8 +176,11 @@ const Home: NextPage = () => {
       const claimStatus = data.airdrop_window_claim_status;
       const isRegistered = data.is_already_registered;
       const reasonForRejection = data.reject_reason;
+      const airdropRewards = data.airdrop_window_rewards;
       const rules = data.airdrop_rules;
 
+      setAirdropRules(rules);
+      setAirdropwindowRewards(airdropRewards);
       setUserEligibility(
         isEligible ? UserEligibility.ELIGIBLE : UserEligibility.NOT_ELIGIBLE
       );
@@ -194,14 +217,12 @@ const Home: NextPage = () => {
     [activeWindow]
   );
 
-  console.log("activeWindow", activeWindow, airdropWindowClosingTime);
-
   return (
-    <CommonLayout>
+    <CommonLayout handleScrollToLink={handleScrollToLink}>
       <Head>
-        <title>Airdrop</title>
+        <title>Nunet Occam</title>
       </Head>
-      <Box px={[0, 4, 15]} mt={3}>
+      <Box px={[0, 4, 15]} mt={18}>
         <EligibilityBanner
           userEligibility={userEligibility}
           onViewRules={() => handleScrollToView(rulesRef)}
@@ -218,28 +239,21 @@ const Home: NextPage = () => {
         airdropTotalTokens={airdropTotalTokens}
         claimStatus={userClaimStatus}
         setClaimStatus={setUserClaimStatus}
+        airdropWindowrewards={airdropWindowRewards}
       />
-
       <HowItWorks
-        title="How NuNet Airdrop works"
+        ref={howitworksRef}
+        title="How NuNet Occam Airdrop works"
         steps={HowItWorksSampleData}
-        blogLink="www.google.com"
+        blogLink="https://medium.com/occam-finance/nunet-backed-by-singularitynet-to-hold-ido-on-occamrazer-7e9eab947add"
       />
       <SubscribeToNotification
         ref={getNotificationRef}
         onSubscribe={handleNotificationSubscription}
       />
-      <Airdroprules
-        title="Airdrop Rules"
-        steps={airdropRules}
-        blogLink="www.google.com"
-        ref={rulesRef}
-      />
-      <AirdropSchedules ref={scheduleRef} schedules={schedules} />
-      <Ecosystem blogLink="www.google.com" />
 
-      <FAQPage />
-      <Learn />
+      <AirdropSchedules ref={scheduleRef} schedules={schedules} />
+      <Ecosystem blogLink="https://singularitynet.io/" />
     </CommonLayout>
   );
 };
@@ -248,33 +262,23 @@ export default Home;
 
 const HowItWorksSampleData = [
   {
-    title: "About the NuNet Airdrop",
+    title: "About the NuNet Occam Airdrop",
     description:
-      "NuNet is giving away 5% of its total supply of one billion NTX tokens, i.e. 50 million NTX, for free to loyal backers and members of the SingularityNET and NuNet communities. This airdrop comes with certain requirements for particpation, detailed below.",
+      "This is the dApp where you can claim the remaining two 25% installments of the NuNet sale on OccamRazer.",
   },
   {
-    title: "Schedule of the NuNet airdrop",
+    title: "Schedule of the NuNet Occam airdrop",
     description:
-      "The airdrop will take place in four monthly segments, starting from DATE-TIME-TIMEZONE. Only participants who have registered in advance will be able to participate. The deadline for completing your registration is DATE-TIME-TIMEZONE.",
+      "The two remaining distributions will unlock on December 26th 2021, 13:00 UTC and January 26th 2022, 13:00 UTC.",
   },
   {
-    title: "Requirements for participating in the airdrop",
+    title: "Process of claiming",
     description:
-      "Users will be eligible to register for the airdrop if they have held a minimum of xxxx AGIX tokens or xxxx SDAO in their wallets since DATE-TIME-TIMEZONE. We will take a snapshot of the blcokchain at that time to verify token balances. You must register your wallet address in this portal to be eligible.",
+      "The process is straightforward: after you connect your wallet you can claim the NTX tokens to your wallet.",
   },
   {
-    title: "NTX Allocation for the Airdrops",
+    title: "When you can claim",
     description:
-      "A total of 50,000,000 NTX will be distributed across the four airdrops. These will be distributed in four increasing monthly amounts: 17.5% of the tokens (8,750,000) the first month, 22.5% of the tokens (11,250,000) the second month, 27.5% of the tokens (13,750,000) the third month, and 32.5% of the tokens (16,250,000) the fourth and final month.",
-  },
-  {
-    title: "Schedule of airdrop registration and distribution",
-    description:
-      "The registration period has started and runs until DATE-TIME-TIMEZONE. You must register below before then or you will not be able to participate in the airdrop. Following that is the snapshot at DATE-TIME-TIMEZONE, used to verify token balances to check eligibility. If you need to move tokens to your wallet from an exchange, you must do it before then.",
-  },
-  {
-    title: "Claiming schedule",
-    description:
-      "You can claim your NTX tokens as they become available in the monthly tranches, or you can opt to leave them until the end of the fourth airdrop. You must claim your tokens before DATE-TIME-TIMEZONE; any tokens not claimed by then will be returned to NuNet and used to fund ongoing development.",
+      "You can choose to claim both allocations at once after the second allocation unlocks on January 26th, to save gas fees.",
   },
 ];

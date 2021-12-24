@@ -1,17 +1,22 @@
 import React, { PropsWithChildren } from "react";
 import { useActiveWeb3React } from "snet-ui/Blockchain/web3Hooks";
-import Falsemessage from "snet-ui/Flasemessage";
+import Falsemessage from "snet-ui/Falsemessage";
 import Learn from "snet-ui/LearnandConnect";
 import Footer from "snet-ui/Footer";
 import Header from "snet-ui/Header";
 import { setShowConnectionModal } from "utils/store/features/walletSlice";
 import { useAppDispatch } from "utils/store/hooks";
 import Box from "@mui/system/Box";
+import Container from "@mui/material/Container";
 
+type CommonLayoutProps = {
+  handleScrollToLink: (scrollToKey?: string) => void;
+};
 export default function CommonLayout({
   children,
+  handleScrollToLink,
   ...rest
-}: PropsWithChildren<any>) {
+}: PropsWithChildren<CommonLayoutProps>) {
   const dispatch = useAppDispatch();
   const { account, deactivate } = useActiveWeb3React();
   return (
@@ -21,7 +26,6 @@ export default function CommonLayout({
           position: "fixed",
           top: 0,
           width: "100%",
-
           zIndex: 2,
         }}
       >
@@ -32,9 +36,9 @@ export default function CommonLayout({
           account={account as string}
         />
       </Box>
-      <Box sx={{ mt: 23 }}>{children}</Box>
+      <Box>{children}</Box>
       <Learn />
-      <Footer />
+      <Footer handleScrollToLink={handleScrollToLink} />
     </>
   );
 }

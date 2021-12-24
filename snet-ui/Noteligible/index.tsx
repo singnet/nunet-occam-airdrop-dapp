@@ -94,6 +94,8 @@ export default function Notqualified({
                   color="secondary"
                   size="large"
                   onClick={onViewRules}
+                  sx={{textTransform:"capitalize",fontWeight:600}}
+              
                 >
                   <Typography color="secondary.main" variant="subtitle2">
                     View Airdrop Rules
@@ -105,6 +107,7 @@ export default function Notqualified({
                   size="large"
                   color="secondary"
                   href="/contactus"
+                  sx={{textTransform:"capitalize",fontWeight:600}}
                 >
                   <Typography color="secondary.main" variant="subtitle2">
                     Contact us

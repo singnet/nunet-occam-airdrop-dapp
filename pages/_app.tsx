@@ -17,7 +17,10 @@ import WalletModal from "snet-ui/Blockchain/WalletModal";
 import { store } from "utils/store";
 import { Provider } from "react-redux";
 import { useAppDispatch, useAppSelector } from "utils/store/hooks";
-import { setShowConnectionModal, setWalletError } from "utils/store/features/walletSlice";
+import {
+  setShowConnectionModal,
+  setWalletError,
+} from "utils/store/features/walletSlice";
 import { useActiveWeb3React } from "snet-ui/Blockchain/web3Hooks";
 import { UnsupportedChainIdError, useWeb3React } from "@web3-react/core";
 import UnsupportedNetworkModal from "snet-ui/Blockchain/UnsupportedNetworkModal";
@@ -30,7 +33,10 @@ for @sls-next/serverless-component to build the Image lambda properly.`,
   Image.name
 );
 
-const BlockChainProvider = dynamic(() => import("snet-ui/Blockchain/Provider"), { ssr: false });
+const BlockChainProvider = dynamic(
+  () => import("snet-ui/Blockchain/Provider"),
+  { ssr: false }
+);
 
 // Client-side cache, shared for the whole session of the user in the browser.
 const clientSideEmotionCache = createEmotionCache();
@@ -44,13 +50,16 @@ const AppWithBlockchainComps = (props: AppProps) => {
   const { error, chainId, account } = useWeb3React();
   console.log("global web3 error", error);
 
-  const { showConnectionModal, error: walletError } = useAppSelector((state) => state.wallet);
+  const { showConnectionModal, error: walletError } = useAppSelector(
+    (state) => state.wallet
+  );
   const dispatch = useAppDispatch();
   const supportedChainId = Number(process.env.NEXT_PUBLIC_SUPPORTED_CHAIN_ID);
 
   const showNetworkOverlay = useMemo(() => {
     if (error instanceof UnsupportedChainIdError) return true;
-    if (typeof chainId !== "undefined" && chainId !== supportedChainId) return true;
+    if (typeof chainId !== "undefined" && chainId !== supportedChainId)
+      return true;
     return false;
   }, [chainId, error, account]);
 
@@ -61,8 +70,14 @@ const AppWithBlockchainComps = (props: AppProps) => {
   return (
     <>
       <Component {...pageProps} />
-      <WalletModal open={showConnectionModal} setOpen={(val) => dispatch(setShowConnectionModal(val))} />
-      <UnsupportedNetworkModal open={showNetworkOverlay} supportedChainId={supportedChainId} />
+      <WalletModal
+        open={showConnectionModal}
+        setOpen={(val) => dispatch(setShowConnectionModal(val))}
+      />
+      <UnsupportedNetworkModal
+        open={showNetworkOverlay}
+        supportedChainId={supportedChainId}
+      />
     </>
   );
 };
@@ -74,7 +89,7 @@ function MyApp(props: AppProps) {
   return (
     <CacheProvider value={emotionCache}>
       <Head>
-        <title>My page</title>
+        <title>Nunet Occam</title>
         <meta name="viewport" content="initial-scale=1, width=device-width" />
       </Head>
       <ThemeProvider theme={lightTheme}>

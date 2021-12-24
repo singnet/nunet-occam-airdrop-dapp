@@ -14,7 +14,7 @@ import { ClaimStatus, UserEligibility } from "utils/constants/CustomTypes";
 import { API_PATHS } from "utils/constants/ApiPaths";
 import { AirdropWindow, WindowStatus } from "utils/airdropWindows";
 import { useEthSign } from "snet-ui/Blockchain/signatureHooks";
-import AirdropContractNetworks from "contract/networks/SingularityAirdrop.json";
+import AirdropContractNetworks from "contract/occam-contract/networks/SingularityAirdrop.json";
 import { parseEthersError } from "utils/ethereum";
 import { useAirdropContract } from "utils/AirdropContract";
 import { TransactionResponse } from "@ethersproject/abstract-provider";
@@ -45,6 +45,11 @@ const windowStatusActionMap = {
   [WindowStatus.CLAIM]: "claim",
 };
 
+const blockChainActionTypes = {
+  CLAIM: "claim",
+  STAKE_AND_CLAIM: "stake_and_claim",
+};
+
 interface RegistrationProps {
   userEligibility: UserEligibility;
   userRegistered: boolean;
@@ -55,6 +60,7 @@ interface RegistrationProps {
   claimStatus: ClaimStatus;
   setClaimStatus: (value: ClaimStatus) => void;
   airdropTotalTokens: { value: number; name: string };
+  airdropWindowrewards: number;
 }
 
 // const airdropOpensIn = new Date();
@@ -70,13 +76,15 @@ const Registration: FunctionComponent<RegistrationProps> = ({
   claimStatus,
   setClaimStatus,
   airdropTotalTokens,
+  airdropWindowrewards,
 }) => {
+  const [stakeDetails, setStakeDetails] = useState<any>({ isStakable: false });
+  const [windowAction, setWindowAction] = useState<string>("");
   const [error, setErrors] = useState<any>(null);
   const [uiAlert, setUiAlert] = useState<{ type: AlertColor; message: string }>(
     { type: AlertTypes.info, message: "" }
   );
   const [airdropOpen, setAirdropOpen] = useState(false);
-  const [windowAction, setWindowAction] = useState<string>("");
 
   const [airdropHistory, setAirdropHistory] = useState([]);
   const { account, library, chainId } = useActiveWeb3React();
@@ -100,6 +108,7 @@ const Registration: FunctionComponent<RegistrationProps> = ({
   useEffect(() => {
     getClaimHistory();
   }, [activeWindow?.airdrop_id, activeWindow?.airdrop_window_id, account]);
+
   const endDate = useMemo(
     () =>
       activeWindow?.airdrop_window_status === WindowStatus.REGISTRATION
@@ -113,6 +122,25 @@ const Registration: FunctionComponent<RegistrationProps> = ({
         : new Date(),
     [activeWindow]
   );
+
+  const getStakeDetails = async () => {
+    try {
+      if (!activeWindow || !account) return;
+      const response: any = await axios.post(API_PATHS.STAKE_DETAILS, {
+        address: account,
+        airdrop_id: `${activeWindow.airdrop_id}`,
+        airdrop_window_id: `${activeWindow.airdrop_window_id}`,
+      });
+      const stakeInfo = response.data.data.stake_details;
+      const details = {
+        claimableTokensToWallet: stakeInfo.claimable_tokens_to_wallet,
+        isStakable: stakeInfo.is_stakable,
+        stakableTokenName: stakeInfo.stakable_token_name,
+        stakableTokens: stakeInfo.stakable_tokens,
+      };
+      setStakeDetails(details);
+    } catch (error) {}
+  };
 
   const handleRegistration = async () => {
     try {
@@ -172,16 +200,142 @@ const Registration: FunctionComponent<RegistrationProps> = ({
         value: `${el.claimable_amount} ${airdropTotalTokens.name}`,
       },
       {
-        label: `Window ${el.airdrop_window_id} Claimed`,
+        label: `Window ${el.airdrop_window_id} ${el.action_type}`,
         value: `${el.txn_status}`,
       },
     ]);
 
+    await getStakeDetails();
     const airdropWindowAction =
       windowStatusActionMap[activeWindow?.airdrop_window_status ?? ""];
-
     setWindowAction(airdropWindowAction);
     setAirdropHistory(history.flat());
+  };
+
+  const handleAutoStake = async () => {
+    if (
+      typeof activeWindow?.airdrop_id === "undefined" ||
+      typeof activeWindow.airdrop_window_id === "undefined" ||
+      !account ||
+      !library
+    )
+      return;
+
+    if (claimStatus === ClaimStatus.PENDING) {
+      setUiAlert({
+        type: AlertTypes.error,
+        message:
+          "There is already a pending claim transaction. Please wait for it to get completed",
+      });
+      return;
+    } else if (claimStatus === ClaimStatus.SUCCESS) {
+      setUiAlert({
+        type: AlertTypes.error,
+        message: "You have already Claimed",
+      });
+      return;
+    }
+
+    const getStakeDetails = async () => {
+      try {
+        const response: any = await axios.post(API_PATHS.CLAIM_SIGNATURE, {
+          address: account,
+          airdrop_id: activeWindow.airdrop_id.toString(),
+          airdrop_window_id: activeWindow.airdrop_window_id.toString(),
+        });
+
+        console.log("response", response);
+        return response.data.data;
+      } catch (error: any) {
+        const backendErrorMessage = error?.errorText?.error?.message;
+        if (backendErrorMessage) {
+          throw new APIError(backendErrorMessage);
+        }
+        throw error;
+      }
+    };
+
+    const executeStakeMethod = async (
+      signature: string,
+      claimAmount: number
+    ): Promise<TransactionResponse> => {
+      try {
+        // TODO: Don't hardcode it, use it from the API or env
+        // const tokenAddress = "0xa1e841e8f770e5c9507e2f8cfd0aa6f73009715d"; // AGIX
+        const tokenAddress = "0x7F44Bc93BCb96011800Da80d1a31E05e5A5AC7f9";
+        const stakingAddress = "0x8C8AB2046f4A5FD93bbeEd754b3143401DA15419";
+        console.log("calling autostake method");
+
+        const txn = await airdropContract.stake(
+          tokenAddress,
+          stakingAddress,
+          stakeDetails.stakableTokens.toString(),
+          stakeDetails.claimableTokensToWallet.toString(),
+          activeWindow.airdrop_id?.toString(),
+          activeWindow.airdrop_window_id?.toString(),
+          signature
+        );
+        return txn;
+      } catch (error: any) {
+        console.log("contract error", error);
+
+        throw error;
+      }
+    };
+
+    const saveClaimTxn = async (txnHash: string, claimAmount) => {
+      const response = await axios.post(API_PATHS.CLAIM_SAVE_TXN, {
+        address: account,
+        txn_hash: txnHash,
+        amount: claimAmount.toString(),
+        airdrop_id: activeWindow?.airdrop_id?.toString(),
+        airdrop_window_id: activeWindow?.airdrop_window_id?.toString(),
+        blockchain_method: blockChainActionTypes.STAKE_AND_CLAIM,
+      });
+      console.log("response.data", response.data);
+    };
+
+    try {
+      // Retreiving Claim Signature from the backend signer service
+      const claimDetails = await getStakeDetails();
+
+      // Using the claim signature and calling the Ethereum Airdrop Contract.
+      const txn = await executeStakeMethod(
+        claimDetails.signature,
+        claimDetails.claimable_amount
+      );
+
+      await saveClaimTxn(txn.hash, claimDetails.claimable_amount);
+      setClaimStatus(ClaimStatus.PENDING);
+      const receipt = await txn.wait();
+      console.log("receipt", receipt);
+      if (receipt.status) {
+        setUserRegistered(true);
+        setClaimStatus(ClaimStatus.SUCCESS);
+        setUiAlert({
+          type: AlertTypes.success,
+          message: "Staked and Claimed successfully",
+        });
+      }
+    } catch (error: any) {
+      console.log("signature error", error);
+      if (error instanceof APIError) {
+        setUiAlert({ type: AlertTypes.error, message: error.message });
+        return;
+      }
+      const ethersError = parseEthersError(error);
+      if (ethersError) {
+        setUiAlert({
+          type: AlertTypes.error,
+          message: `Failed Contract: ${ethersError}`,
+        });
+        return;
+      }
+      setUiAlert({
+        type: AlertTypes.error,
+        message: `Failed Uncaught: ${error.message}`,
+      });
+    }
   };
 
   const handleClaim = async () => {
@@ -234,7 +388,10 @@ const Registration: FunctionComponent<RegistrationProps> = ({
       try {
         // TODO: Don't hardcode it, use it from the API or env
         // const tokenAddress = "0xa1e841e8f770e5c9507e2f8cfd0aa6f73009715d"; // AGIX
-        const tokenAddress = "0x5e94577b949a56279637ff74dfcff2c28408f049"; // SDAO
+        const tokenAddress = "0x7F44Bc93BCb96011800Da80d1a31E05e5A5AC7f9";
+        console.log("calling claim method");
+
+        // TODO: Split signature and pass it as v,r,s
 
         const txn = await airdropContract.claim(
           tokenAddress,
@@ -258,6 +415,7 @@ const Registration: FunctionComponent<RegistrationProps> = ({
         amount: claimAmount.toString(),
         airdrop_id: activeWindow?.airdrop_id?.toString(),
         airdrop_window_id: activeWindow?.airdrop_window_id?.toString(),
+        blockchain_method: blockChainActionTypes.CLAIM,
       });
       console.log("response.dat", response.data);
     };
@@ -350,16 +508,15 @@ const Registration: FunctionComponent<RegistrationProps> = ({
       activeWindow?.airdrop_window_status === WindowStatus.REGISTRATION,
     [userRegistered, activeWindow]
   );
-
   if (!activeWindow) {
     return null;
   }
 
-  if (!account) {
+  if (!account && (activeWindow !== null || activeWindow !== undefined)) {
     return (
-      <Grid container spacing={2} px={4} mt={2} mb={8}>
+      <Grid container spacing={2} px={5} mt={2} mb={8}>
         <Grid item xs={12} sm={6}>
-          <Airdropinfo blogLink="www.google.com" />
+          <Airdropinfo blogLink="https://nunet-io.github.io/public/NuNet_Whitepaper_2.0.pdf" />
         </Grid>
         <Grid item xs={12} sm={6}>
           <AirdropRegistrationMini
@@ -383,8 +540,11 @@ const Registration: FunctionComponent<RegistrationProps> = ({
       </Box>
     );
   }
-
   if (userEligibility === UserEligibility.NOT_ELIGIBLE) {
+    return null;
+  }
+
+  if (!activeWindow) {
     return null;
   }
 
@@ -400,6 +560,7 @@ const Registration: FunctionComponent<RegistrationProps> = ({
           onViewNotification={onViewNotification}
           currentWindowId={activeWindow?.airdrop_window_order}
           totalWindows={totalWindows}
+          history={airdropHistory}
         />
       </Box>
     );
@@ -429,7 +590,6 @@ const Registration: FunctionComponent<RegistrationProps> = ({
   ) : !showMini ? (
     <Box sx={{ px: [0, 4, 15] }}>
       <AirdropRegistration
-        windowAction={windowAction}
         currentWindowId={activeWindow.airdrop_window_order}
         totalWindows={totalWindows}
         airdropWindowTotalTokens={activeWindow.airdrop_window_total_tokens}
@@ -439,15 +599,18 @@ const Registration: FunctionComponent<RegistrationProps> = ({
         onViewSchedule={onViewSchedule}
         history={airdropHistory}
         onClaim={handleClaim}
+        onAutoStake={handleAutoStake}
+        stakeInfo={stakeDetails.isStakable}
         airdropWindowStatus={activeWindow.airdrop_window_status}
         uiAlert={uiAlert}
         activeWindow={activeWindow}
+        airdropWindowrewards={airdropWindowrewards}
       />
     </Box>
   ) : (
     <Grid container spacing={2} px={4} mt={2} mb={8}>
       <Grid item xs={12} sm={6}>
-        <Airdropinfo blogLink="www.google.com" />
+        <Airdropinfo blogLink="https://nunet-io.github.io/public/NuNet_Whitepaper_2.0.pdf" />
       </Grid>
       <Grid item xs={12} sm={6}>
         <AirdropRegistrationMini

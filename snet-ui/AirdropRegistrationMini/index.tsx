@@ -6,7 +6,6 @@ import Divider from "@mui/material/Divider";
 import Grid from "@mui/material/Grid";
 import Button from "@mui/material/Button";
 import Box from "@mui/system/Box";
-
 type AirdropRegistrationMiniProps = {
   startDate: Date;
   totalTokens: number;
@@ -16,7 +15,6 @@ type AirdropRegistrationMiniProps = {
   windowAction: string;
   onClickNotification: Function;
 };
-
 const DateFormatter = new Intl.DateTimeFormat("en-GB", {
   day: "numeric",
   month: "long",
@@ -42,10 +40,10 @@ export default function AirdropRegistrationMini({
   return (
     <GradientBox
       $background="bgGradientHighlight"
-      sx={{ px: 4, pt: 4, pb: 5, borderRadius: 2 }}
+      sx={{ px: 2, pt: 2, pb: 2, borderRadius: 2 }}
     >
       <Typography color="text.secondary" variant="h4" align="center" mb={6}>
-        Airdrop registration window {currentAirdropWindow}/{totalAirdropWindows}{" "}
+        Occam sale distribution {currentAirdropWindow}/{totalAirdropWindows}{" "}
         {windowAction} {formattedDate}
       </Typography>
       <FlipCountdown endDate={startDate} />
@@ -64,7 +62,7 @@ export default function AirdropRegistrationMini({
             Total Token Worth
           </Typography>
           <Typography variant="h3" color="text.secondary">
-            {totalTokens} {tokenName}
+            5,000,000 {tokenName}
           </Typography>
         </Grid>
       </Grid>
@@ -74,6 +72,7 @@ export default function AirdropRegistrationMini({
           onClick={onViewNotification}
           variant="contained"
           color="secondary"
+          sx={{ textTransform: "capitalize", fontWeight: 600 }}
         >
           Get Notifications
         </Button>

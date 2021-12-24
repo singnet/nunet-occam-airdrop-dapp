@@ -6,9 +6,14 @@ import List from "@mui/material/List";
 import ListItemButton from "@mui/material/ListItemButton";
 import Typography from "@mui/material/Typography";
 import ListItem from "@mui/material/ListItem";
+import Link from "@mui/material/Link";
 import AppLogo from "public/AppLogo.png";
+import { FAQPage } from "snet-ui/FAQ/index.stories";
 
-export default function Footer() {
+type FooterProps = {
+  handleScrollToLink: (scrollToKey?: string) => void;
+};
+export default function Footer({ handleScrollToLink }: FooterProps) {
   return (
     <Box
       sx={{
@@ -31,11 +36,11 @@ export default function Footer() {
         >
           <List subheader>
             <ListItem sx={{ justifyContent: "right" }}>
-              <img src="NuNet Logo.png" width="171.5px" height="52.27px" />
+              <img src="NuNet Logo.png" height="53px" />
             </ListItem>
             <ListItemButton
               component="a"
-              href="www.google.com"
+              href="https://nunet.io/"
               target="_blank"
               rel="noreferrer noopener"
               sx={{ justifyContent: "right" }}
@@ -56,8 +61,12 @@ export default function Footer() {
                 A project powered by
               </Typography>
             </ListItem>
-            <ListItem sx={{ justifyContent: "right" }}>
-              <img src="SNETLogoHorizontalWhite.png" />
+            <ListItem
+              sx={{
+                justifyContent: "right",
+              }}
+            >
+              <img src="SNET Logo.png" width="130px" />
             </ListItem>
           </List>
         </Grid>
@@ -73,11 +82,12 @@ export default function Footer() {
             >
               {linkItem.links.map((link) => (
                 <ListItemButton
-                  component="a"
+                  component={link.scrollToKey ? "b" : "a"}
                   href={link.url}
                   target={link.external ? "_blank" : ""}
                   rel={link.external ? "noreferrer noopener" : ""}
                   key={link.text}
+                  onClick={() => handleScrollToLink(link.scrollToKey)}
                 >
                   <Typography variant="body1" sx={{ m: 2, mt: 0, mb: 0 }}>
                     {link.text}
@@ -98,29 +108,69 @@ const LinksData = [
   {
     header: "Airdrop",
     links: [
-      { text: "How Airdrop Works", url: "#", external: false },
-      { text: "Airdrop Rules", url: "#", external: false },
-      { text: "Airdrop Schedule", url: "#", external: false },
-      { text: "F.A.Q", url: "#", external: false },
-      { text: "Contact Us", url: "#", external: false },
+      {
+        text: "How Airdrop Works",
+
+        scrollToKey: "howitworks",
+      },
+      
+      {
+        text: "Airdrop Schedule",
+
+        scrollToKey: "schedule",
+      },
+      
+      { text: "Contact Us", url: "/contactus", external: false },
     ],
   },
   {
     header: "Community",
     links: [
-      { text: "Official Blog", url: "www.google.com", external: true },
-      { text: "Documentation", url: "www.google.com", external: true },
-      { text: "Telegram", url: "www.google.com", external: true },
+      {
+        text: "Official Blog",
+        url: "https://medium.com/occam-finance/nunet-backed-by-singularitynet-to-hold-ido-on-occamrazer-7e9eab947add",
+        external: true,
+      },
+      {
+        text: "Documentation",
+        url: "https://nunet.io/#technology",
+        external: true,
+      },
+      { text: "Telegram", url: "https://t.me/NuNet_Community", external: true },
     ],
   },
   {
     header: "Social Media",
     links: [
-      { text: "Twitter", url: "www.google.com", external: true },
-      { text: "Facebook", url: "www.google.com", external: true },
-      { text: "LinkedIn", url: "www.google.com", external: true },
-      { text: "YouTube", url: "www.google.com", external: true },
-      { text: "Instagram", url: "www.google.com", external: true },
+      {
+        text: "Twitter",
+        url: "https://twitter.com/nunet_global",
+        external: true,
+      },
+      {
+        text: "Facebook",
+        url: "https://www.facebook.com/NunetGlobal",
+        external: true,
+      },
+      {
+        text: "LinkedIn",
+        url: "https://www.linkedin.com/company/nunet-global/",
+        external: true,
+      },
+      {
+        text: "YouTube",
+        url: "https://www.youtube.com/channel/UCLTTOrMYDTbQYHs1HCFPtfA",
+        external: true,
+      },
+      //{ text: "Instagram", url: "www.google.com", external: true },
     ],
   },
 ];
+
+function rulesRef(rulesRef: any): void {
+  throw new Error("Function not implemented.");
+}
+
+function scrollToKey(scrollToKey: any): void {
+  throw new Error("Function not implemented.");
+}

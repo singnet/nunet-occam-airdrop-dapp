@@ -9,6 +9,7 @@ import axios from "utils/Axios";
 import Alert from "@mui/material/Alert";
 import { API_PATHS } from "utils/constants/ApiPaths";
 import LoadingButton from "snet-ui/LoadingButton";
+import Container from "@mui/material/Container";
 
 const categories = ["Airdrop Enquiry"];
 const alertTypes: any = {
@@ -95,86 +96,88 @@ export default function ContactUs() {
 
   return (
     <CommonLayout>
-      <Box p={5}>
-        <Typography align="center" color="primary" variant="h3">
+      <Box>
+        <Typography align="center" color="primary" variant="h2">
           Contact Us
         </Typography>
-
-        <Grid container sx={{ my: 3 }} spacing={2}>
-          <Grid item xs={12} sm={6}>
-            <TextField
-              color="primary"
-              required
-              value={username}
-              label="Your username (Optional)"
-              placeholder="Firstusername Lastusername"
-              onChange={handleusernameChange}
-              fullWidth
-            />
+        <Container>
+          <Grid container sx={{ my: 3 }} spacing={2}>
+            <Grid item xs={12} sm={6}>
+              <TextField
+                color="primary"
+                required
+                value={username}
+                label="Your username (Optional)"
+                placeholder="Username"
+                onChange={handleusernameChange}
+                fullWidth
+              />
+            </Grid>
+            <Grid item xs={12} sm={6}>
+              <TextField
+                error={emailError}
+                color="primary"
+                required
+                value={email}
+                label="Email"
+                placeholder="Enter your email here"
+                onChange={handleEmailChange}
+                fullWidth
+                helperText={emailError}
+              />
+            </Grid>
           </Grid>
-          <Grid item xs={12} sm={6}>
-            <TextField
-              error={emailError}
-              color="primary"
-              required
-              value={email}
-              label="Email"
-              placeholder="Enter your email here"
-              onChange={handleEmailChange}
-              fullWidth
-              helperText={emailError}
-            />
-          </Grid>
-        </Grid>
-        <TextField
-          color="primary"
-          label="Wallet Address (Optional)"
-          placeholder="connect your wallet"
-          sx={{ my: 3 }}
-          fullWidth
-        />
-        <Select
-          labelId="feedback-category-select-label"
-          id="feedback-category-select"
-          value={category}
-          label="Category"
-          onChange={handleChange}
-          sx={{ my: 3 }}
-          fullWidth
-        >
-          {categories.map((category) => (
-            <MenuItem value={category} key={category}>
-              {category}
-            </MenuItem>
-          ))}
-        </Select>
-        <TextField
-          error={messageError}
-          color="primary"
-          required
-          value={message}
-          label="Message"
-          placeholder="Please enter your comments here"
-          sx={{ my: 3 }}
-          fullWidth
-          multiline
-          rows={4}
-          onChange={handleMessageChange}
-          helperText={messageError}
-        />
-        {alertMessage.value.trim() ? (
-          <Alert severity={alertMessage.severity}>{alertMessage.value}</Alert>
-        ) : null}
-        <Box display="flex" justifyContent="center">
-          <LoadingButton
-            variant="contained"
-            color="secondary"
-            onClick={handleSubmit}
-            loading={submittingForm}
+          <TextField
+            color="primary"
+            label="Wallet Address (Optional)"
+            placeholder="connect your wallet"
+            sx={{ my: 3 }}
+            fullWidth
+          />
+          <Select
+            labelId="feedback-category-select-label"
+            id="feedback-category-select"
+            value={category}
+            label="Category"
+            onChange={handleChange}
+            sx={{ my: 3 }}
+            fullWidth
           >
-            Contact
-          </LoadingButton>
-        </Box>
+            {categories.map((category) => (
+              <MenuItem value={category} key={category}>
+                {category}
+              </MenuItem>
+            ))}
+          </Select>
+          <TextField
+            error={messageError}
+            color="primary"
+            required
+            value={message}
+            label="Message"
+            placeholder="Please enter your comments here"
+            sx={{ my: 3 }}
+            fullWidth
+            multiline
+            rows={4}
+            onChange={handleMessageChange}
+            helperText={messageError}
+          />
+          {alertMessage.value.trim() ? (
+            <Alert severity={alertMessage.severity}>{alertMessage.value}</Alert>
+          ) : null}
+          <Box display="flex" justifyContent="center" sx={{ my: 2 }}>
+            <LoadingButton
+              variant="contained"
+              color="secondary"
+              onClick={handleSubmit}
+              loading={submittingForm}
+              sx={{ textTransform: "capitalize" }}
+            >
+              Contact
+            </LoadingButton>
+          </Box>
+        </Container>
       </Box>
     </CommonLayout>
   );
