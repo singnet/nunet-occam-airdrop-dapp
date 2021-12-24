@@ -90,7 +90,7 @@ const Registration: FunctionComponent<RegistrationProps> = ({
   const { account, library, chainId } = useActiveWeb3React();
   const ethSign = useEthSign();
   const airdropContract = useAirdropContract(
-    AirdropContractNetworks[chainId ?? 0]?.address
+    process.env.NEXT_PUBLIC_CONTRACT_ADDRESS
   );
   const { window: activeWindow, totalWindows } = useAppSelector(
     selectActiveWindow
@@ -380,7 +380,8 @@ const Registration: FunctionComponent<RegistrationProps> = ({
       claimAmount: number
     ): Promise<TransactionResponse> => {
       try {
-        const tokenAddress = process.env.NEXT_TOKEN_ADDRESS;
+        const contractAddress = process.env.NEXT_PUBLIC_CONTRACT_ADDRESS;
+        const tokenAddress = process.env.NEXT_PUBLIC_NTX_ADDRESS;
         console.log("calling claim method");
 
         const txn = await airdropContract.claim(
