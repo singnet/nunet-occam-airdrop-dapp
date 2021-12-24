@@ -243,7 +243,7 @@ const Home: NextPage = () => {
       />
       <HowItWorks
         ref={howitworksRef}
-        title="How NuNet Occam Airdrop works"
+        title="Claiming your NTX allocation of the OccamRazer launch."
         steps={HowItWorksSampleData}
         blogLink="https://medium.com/occam-finance/nunet-backed-by-singularitynet-to-hold-ido-on-occamrazer-7e9eab947add"
       />
@@ -262,12 +262,12 @@ export default Home;
 
 const HowItWorksSampleData = [
   {
-    title: "About the NuNet Occam Airdrop",
+    title: "Participate in the OccamRazer IDO",
     description:
-      "This is the dApp where you can claim the remaining two 25% installments of the NuNet sale on OccamRazer.",
+      "If you have participated in the OccamRazer round, you can claim the vested allocations here, in two installments of 25%.",
   },
   {
-    title: "Schedule of the NuNet Occam airdrop",
+    title: "OccamRazer vesting schedule",
     description:
       "The two remaining distributions will unlock on December 26th 2021, 13:00 UTC and January 26th 2022, 13:00 UTC.",
   },
@@ -277,8 +277,8 @@ const HowItWorksSampleData = [
       "The process is straightforward: after you connect your wallet you can claim the NTX tokens to your wallet.",
   },
   {
-    title: "When you can claim",
+    title: "Final claim",
     description:
-      "You can choose to claim both allocations at once after the second allocation unlocks on January 26th, to save gas fees.",
+      "You can claim your allocations until 3 months after the last unlock. The final claim date is April 26th 13:00 UTC. You can claim both unlocked allocations at once, to save gas fees.",
   },
 ];

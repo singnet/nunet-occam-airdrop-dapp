@@ -59,8 +59,8 @@ export default function EligibilityBanner({
         <Grid item xs={12} md={6}>
           <Typography variant="normal">Airdrop Eligibility</Typography>
 
-          <Box sx={{ display: "flex", alignItems: "center", p: 0.5, pr: 0 }}>
-            <Box color="success" sx={{ mr: 1 }}>
+          <Box sx={{ display: "flex", alignItems: "center", mt: 1 }}>
+            <Box color="success" sx={{ mr: 1, mt: 1 }}>
               <CheckCircleIcon color="success" />
             </Box>
 
@@ -69,14 +69,10 @@ export default function EligibilityBanner({
               {totalWindows}
             </Typography>
           </Box>
-
-          <a href="#">
-            <Typography color="secondary.main" variant="subtitle2">View Details</Typography>
-          </a>
         </Grid>
         <Grid item xs={12} md={6}>
           <Typography>Connected Wallet Address</Typography>
-          <Typography noWrap variant="priority" component="p" >
+          <Typography noWrap variant="priority" component="p">
             {account}
           </Typography>
           <Typography sx={{ textTransform: "capitalize" }} variant="h5">
