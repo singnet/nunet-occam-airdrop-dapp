@@ -115,7 +115,7 @@ const LinksData = [
       },
       
       {
-        text: "Airdrop Schedule",
+        text: "Vesting Schedule",
 
         scrollToKey: "schedule",
       },
