@@ -79,7 +79,7 @@ const windowStatusActionMap = {
 };
 
 const statusLabelMap = {
-  [WindowStatus.CLAIM]: "Claim Open",
+  [WindowStatus.CLAIM]: "Vesting Open",
   [WindowStatus.REGISTRATION]: "Registration Open",
   [WindowStatus.UPCOMING]: "",
 };
@@ -420,22 +420,6 @@ export default function AirdropRegistration({
                     View Schedule
                   </Button>
                 </Box>
-                <Box
-                  sx={{ display: "flex", justifyContent: "center", mt: [2, 0] }}
-                >
-                  <Button
-                    variant="contained"
-                    color="secondary"
-                    onClick={onViewRules}
-                    sx={{
-                      textTransform: "capitalize",
-                      width: 170,
-                      fontWeight: 600,
-                    }}
-                  >
-                    View Rules
-                  </Button>
-                </Box>
               </>
             )}
           </Box>
@@ -446,7 +430,7 @@ export default function AirdropRegistration({
                 color="textAdvanced.secondary"
                 variant="h5"
               >
-                Your Airdrop History
+                Your Vesting History
               </Typography>
               <History events={history} />
             </Container>
