@@ -19,6 +19,7 @@ import { isDateBetween, isDateGreaterThan } from "utils/date";
 import Staketype from "snet-ui/AirdropRegistration/Staketype";
 import axios from "utils/Axios";
 import Container from "@mui/material/Container";
+import moment from "moment";
 
 import { API_PATHS } from "utils/constants/ApiPaths";
 
@@ -116,7 +117,10 @@ export default function AirdropRegistration({
   const [claimLoader, setClaimLoader] = useState(false);
   const [stakeModal, setStakeModal] = useState(false);
 
-  const formattedDate = useMemo(() => DateFormatter.format(endDate), [endDate]);
+  const formattedDate = useMemo(
+    () => moment.utc(endDate).local().format("YYYY-MM-DD HH:mm:ss"),
+    [endDate]
+  );
 
   const toggleStakeModal = () => {
     setStakeModal(!stakeModal);
@@ -312,7 +316,7 @@ export default function AirdropRegistration({
                   color="textAdvanced.secondary"
                   align="center"
                 >
-                  {airdropWindowrewards/1000000} NTX
+                  {airdropWindowrewards / 1000000} NTX
                 </Typography>
               </Box>
               <Container
@@ -334,8 +338,8 @@ export default function AirdropRegistration({
                     sx={{ mx: 1, fontSize: 16 }}
                   >
                     You can start claiming your tokens now. It is possible to
-                    claim all tokens with the last window which will 
-                    save you gas fees.
+                    claim all tokens with the last window which will save you
+                    gas fees.
                   </Typography>
                 </Box>
               </Container>
