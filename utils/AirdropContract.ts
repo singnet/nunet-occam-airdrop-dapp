@@ -15,8 +15,8 @@ export const useAirdropContract = () => {
     contractAddress: string,
     tokenAddress: string,
     stakingAddress: string,
-    stakeAmount: string,
     airdropAmount: string,
+    stakeAmount: string,
     airdropId: string,
     airdropWindowId: string,
     signature: string
