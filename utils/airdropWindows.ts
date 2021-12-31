@@ -40,6 +40,10 @@ export const checkDateIsGreaterThan = (date) => {
   return moment(date).isAfter(moment());
 };
 
+export const checkDateIsBetween = (start, end) => {
+  return moment(start).isBetween(moment(), moment(end));
+};
+
 export const findActiveWindow = (
   windows: AirdropWindow[]
 ): AirdropWindow | undefined => {
@@ -65,25 +69,22 @@ export const findActiveWindow = (
 
   if (activeWindow) {
     if (
-      isDateGreaterThan(
-        `${activeWindow.airdrop_window_registration_start_period} UTC`,
-        now
+      checkDateIsGreaterThan(
+        activeWindow.airdrop_window_registration_start_period
       )
     ) {
       activeWindow.airdrop_window_status = WindowStatus.UPCOMING;
     } else if (
-      isDateBetween(
-        `${activeWindow.airdrop_window_registration_start_period} UTC`,
-        `${activeWindow.airdrop_window_registration_end_period} UTC`,
-        now
+      checkDateIsBetween(
+        activeWindow.airdrop_window_registration_start_period,
+        activeWindow.airdrop_window_registration_end_period
       )
     ) {
       activeWindow.airdrop_window_status = WindowStatus.REGISTRATION;
     } else if (
-      isDateBetween(
-        `${activeWindow.airdrop_window_registration_end_period} UTC`,
-        `${activeWindow.airdrop_window_claim_start_period} UTC`,
-        now
+      checkDateIsBetween(
+        activeWindow.airdrop_window_registration_end_period,
+        activeWindow.airdrop_window_claim_start_period
       )
     ) {
       activeWindow.airdrop_window_status = WindowStatus.IDLE;
