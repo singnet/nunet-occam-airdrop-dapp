@@ -47,8 +47,6 @@ export const checkDateIsBetween = (start, end) => {
 export const findActiveWindow = (
   windows: AirdropWindow[]
 ): AirdropWindow | undefined => {
-  const now = new Date();
-
   const sortedWindows = windows
     .slice()
     .sort(
