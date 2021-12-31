@@ -8,16 +8,15 @@ import { splitSignature } from "@ethersproject/bytes";
 import { getGasPrice } from "./ethereum";
 import { TransactionResponse } from "@ethersproject/abstract-provider";
 
-export const useAirdropContract = (contractAddress: string) => {
-  console.log("Contract Address", contractAddress);
-  //   const [details, setDetails] = useState();
+export const useAirdropContract = () => {
   const { account, library } = useActiveWeb3React();
 
   const stake = async (
+    contractAddress: string,
     tokenAddress: string,
     stakingAddress: string,
-    airdropAmount: string,
     stakeAmount: string,
+    airdropAmount: string,
     airdropId: string,
     airdropWindowId: string,
     signature: string
@@ -69,6 +68,7 @@ export const useAirdropContract = (contractAddress: string) => {
   };
 
   const claim = async (
+    contractAddress: string,
     tokenAddress: string,
     claimAmount: string,
     airdropId: string,
