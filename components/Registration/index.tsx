@@ -79,7 +79,7 @@ const Registration: FunctionComponent<RegistrationProps> = ({
   airdropTotalTokens,
   airdropWindowrewards,
 }) => {
-  const [stakeDetails, setStakeDetails] = useState<any>({ isStakable: false });
+  const [stakeDetails, setStakeDetails] = useState<any>({ is_stakable: false });
   const [windowAction, setWindowAction] = useState<string>("");
   const [error, setErrors] = useState<any>(null);
   const [uiAlert, setUiAlert] = useState<{ type: AlertColor; message: string }>(
@@ -90,9 +90,8 @@ const Registration: FunctionComponent<RegistrationProps> = ({
   const [airdropHistory, setAirdropHistory] = useState([]);
   const { account, library, chainId } = useActiveWeb3React();
   const ethSign = useEthSign();
-  const airdropContract = useAirdropContract(
-    process.env.NEXT_PUBLIC_CONTRACT_ADDRESS
-  );
+  const airdropContract = useAirdropContract();
+
   const { window: activeWindow, totalWindows } = useAppSelector(
     selectActiveWindow
   );
@@ -131,13 +130,7 @@ const Registration: FunctionComponent<RegistrationProps> = ({
         airdrop_window_id: `${activeWindow.airdrop_window_id}`,
       });
       const stakeInfo = response.data.data.stake_details;
-      const details = {
-        claimableTokensToWallet: stakeInfo.claimable_tokens_to_wallet,
-        isStakable: stakeInfo.is_stakable,
-        stakableTokenName: stakeInfo.stakable_token_name,
-        stakableTokens: stakeInfo.stakable_tokens,
-      };
-      setStakeDetails(details);
+      setStakeDetails(stakeInfo);
     } catch (error) {}
   };
 
@@ -250,20 +243,25 @@ const Registration: FunctionComponent<RegistrationProps> = ({
 
     const executeStakeMethod = async (
       signature: string,
-      claimAmount: number
+      claimAmount: number,
+      stakingAddress: string,
+      tokenAddress: string,
+      userWalletAddress: string,
+      contractAddress: string
     ): Promise<TransactionResponse> => {
       try {
-        // TODO: Don't hardcode it, use it from the API or env
-        // const tokenAddress = "0xa1e841e8f770e5c9507e2f8cfd0aa6f73009715d"; // AGIX
-        const tokenAddress = "0x7F44Bc93BCb96011800Da80d1a31E05e5A5AC7f9";
-        const stakingAddress = "0x8C8AB2046f4A5FD93bbeEd754b3143401DA15419";
         console.log("calling autostake method");
 
+        console.log("stakingAddress", stakingAddress);
+        console.log("tokenAddress", tokenAddress);
+        console.log("contractAddress", contractAddress);
+
         const txn = await airdropContract.stake(
+          contractAddress,
           tokenAddress,
           stakingAddress,
-          stakeDetails.stakableTokens.toString(),
-          stakeDetails.claimableTokensToWallet.toString(),
+          stakeDetails.airdrop_rewards.toString(),
+          stakeDetails.stakable_tokens.toString(),
           activeWindow.airdrop_id?.toString(),
           activeWindow.airdrop_window_id?.toString(),
           signature
@@ -290,15 +288,19 @@ const Registration: FunctionComponent<RegistrationProps> = ({
 
     try {
       // Retreiving Claim Signature from the backend signer service
-      const claimDetails = await getStakeDetails();
+      const stakeDetails = await getStakeDetails();
 
       // Using the claim signature and calling the Ethereum Airdrop Contract.
       const txn = await executeStakeMethod(
-        claimDetails.signature,
-        claimDetails.claimable_amount
+        stakeDetails.signature,
+        stakeDetails.claimable_amount,
+        stakeDetails.staking_contract_address,
+        stakeDetails.token_address,
+        stakeDetails.user_address,
+        stakeDetails.contract_address
       );
 
-      await saveClaimTxn(txn.hash, claimDetails.claimable_amount);
+      await saveClaimTxn(txn.hash, stakeDetails.claimable_amount);
       setClaimStatus(ClaimStatus.PENDING);
       const receipt = await txn.wait();
       console.log("receipt", receipt);
@@ -375,15 +377,16 @@ const Registration: FunctionComponent<RegistrationProps> = ({
     };
 
     const executeClaimMethod = async (
+      contractAddress: string,
+      tokenAddress: string,
       signature: string,
       claimAmount: number
     ): Promise<TransactionResponse> => {
       try {
-        const contractAddress = process.env.NEXT_PUBLIC_CONTRACT_ADDRESS;
-        const tokenAddress = process.env.NEXT_PUBLIC_NTX_ADDRESS;
         console.log("calling claim method");
 
         const txn = await airdropContract.claim(
+          contractAddress,
           tokenAddress,
           claimAmount.toString(),
           activeWindow.airdrop_id?.toString(),
@@ -416,6 +419,8 @@ const Registration: FunctionComponent<RegistrationProps> = ({
 
       // Using the claim signature and calling the Ethereum Airdrop Contract.
       const txn = await executeClaimMethod(
+        claimDetails.contract_address,
+        claimDetails.token_address,
         claimDetails.signature,
         claimDetails.claimable_amount
       );
@@ -590,7 +595,7 @@ const Registration: FunctionComponent<RegistrationProps> = ({
         history={airdropHistory}
         onClaim={handleClaim}
         onAutoStake={handleAutoStake}
-        stakeInfo={stakeDetails.isStakable}
+        stakeInfo={stakeDetails}
         airdropWindowStatus={activeWindow.airdrop_window_status}
         uiAlert={uiAlert}
         activeWindow={activeWindow}

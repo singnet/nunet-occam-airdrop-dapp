@@ -215,7 +215,8 @@ export default function AirdropRegistration({
             </Grid>
             <Grid item xs={4}>
               <Typography variant="h4">
-                {stakeInfo.stakableTokens} {stakeInfo.stakableTokenName}
+                {stakeInfo.stakable_tokens / 1000000}{" "}
+                {stakeInfo.stakable_token_name}
               </Typography>
             </Grid>
           </Grid>
@@ -227,8 +228,7 @@ export default function AirdropRegistration({
             </Grid>
             <Grid item xs={4}>
               <Typography variant="h4">
-                {stakeInfo.claimableTokensToWallet}{" "}
-                {stakeInfo.stakableTokenName}
+                {stakeInfo.claimable_tokens_to_wallet / 1000000}{" "}
               </Typography>
             </Grid>
           </Grid>
@@ -363,7 +363,7 @@ export default function AirdropRegistration({
           >
             {airdropWindowStatus === WindowStatus.CLAIM && isClaimActive ? (
               <Stack spacing={2} direction="row">
-                {stakeInfo.isStakable ? (
+                {stakeInfo.is_stakable ? (
                   <LoadingButton
                     variant="contained"
                     color="secondary"
