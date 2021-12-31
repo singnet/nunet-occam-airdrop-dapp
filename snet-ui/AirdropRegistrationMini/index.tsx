@@ -6,6 +6,7 @@ import Divider from "@mui/material/Divider";
 import Grid from "@mui/material/Grid";
 import Button from "@mui/material/Button";
 import Box from "@mui/system/Box";
+import moment from "moment";
 type AirdropRegistrationMiniProps = {
   startDate: Date;
   totalTokens: number;
@@ -33,9 +34,10 @@ export default function AirdropRegistrationMini({
   windowAction,
   onViewNotification,
 }: AirdropRegistrationMiniProps) {
-  const formattedDate = useMemo(() => DateFormatter.format(startDate), [
-    startDate,
-  ]);
+  const formattedDate = useMemo(
+    () => moment.utc(startDate).local().format("YYYY-MM-DD HH:mm:ss"),
+    [startDate]
+  );
 
   return (
     <GradientBox
