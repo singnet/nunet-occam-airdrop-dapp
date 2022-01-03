@@ -363,21 +363,20 @@ export default function AirdropRegistration({
           >
             {airdropWindowStatus === WindowStatus.CLAIM && isClaimActive ? (
               <Stack spacing={2} direction="row">
-                {stakeInfo.is_stakable ? (
-                  <LoadingButton
-                    variant="contained"
-                    color="secondary"
-                    sx={{
-                      width: 350,
-                      textTransform: "capitalize",
-                      fontWeight: 600,
-                    }}
-                    onClick={toggleStakeModal}
-                    loading={claimLoader}
-                  >
-                    Stake
-                  </LoadingButton>
-                ) : null}
+                <LoadingButton
+                  variant="contained"
+                  color="secondary"
+                  sx={{
+                    width: 350,
+                    textTransform: "capitalize",
+                    fontWeight: 600,
+                  }}
+                  onClick={toggleStakeModal}
+                  loading={claimLoader}
+                  disabled={!stakeInfo.is_stakable}
+                >
+                  Stake
+                </LoadingButton>
                 <LoadingButton
                   variant="contained"
                   sx={{
