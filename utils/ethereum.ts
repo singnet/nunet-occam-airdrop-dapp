@@ -1,20 +1,14 @@
 import axios from "axios";
 import BigNumber from "bignumber.js";
 import { serializeError } from "eth-rpc-errors";
-import Web3 from "web3";
-
-declare let window: any;
 
 type BigNumberish = string | number | BigNumber;
 
 const ethersToWei = "1000000000000000000";
 const ethersToGwei = "1000000000";
 
-export const getGasPrice = async () => {
-  const web3 = new Web3(window.ethereum);
-  const gasPrice = await web3.eth.getGasPrice();
-  console.log("gasPrice", gasPrice);
-  return gasPrice;
+export const getGasPrice = async (instantGasPrice: BigNumberish) => {
+  return toGwei(instantGasPrice);
 };
 
 export const toWei = (value: BigNumberish): string => {
