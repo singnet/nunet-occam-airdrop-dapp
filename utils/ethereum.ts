@@ -9,7 +9,7 @@ const ethersToWei = "1000000000000000000";
 const ethersToGwei = "1000000000";
 
 export const getGasPrice = async () => {
-  return await (await ethers.getDefaultProvider().getGasPrice()).toNumber();
+  return (await ethers.getDefaultProvider().getGasPrice()).toNumber();
 };
 
 export const toWei = (value: BigNumberish): string => {
