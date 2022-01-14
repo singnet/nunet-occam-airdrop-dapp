@@ -1,6 +1,5 @@
 import axios from "axios";
 import BigNumber from "bignumber.js";
-import { ethers } from "ethers";
 import { serializeError } from "eth-rpc-errors";
 import Web3 from "web3";
 
