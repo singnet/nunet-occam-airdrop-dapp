@@ -1,5 +1,6 @@
 import axios from "axios";
 import BigNumber from "bignumber.js";
+import { ethers } from "ethers";
 import { serializeError } from "eth-rpc-errors";
 
 type BigNumberish = string | number | BigNumber;
@@ -8,15 +9,7 @@ const ethersToWei = "1000000000000000000";
 const ethersToGwei = "1000000000";
 
 export const getGasPrice = async () => {
-  // TEMPORARY:
-  // return toGwei("80");
-  const url = "https://blockscout.com/eth/mainnet/api/v1/gas-price-oracle";
-  var priceString: any = await axios.get(url);
-  const priceJSON = priceString.data;
-  console.log("PRICE FAST:", priceJSON.fast);
-  const instantGasPrice = priceJSON.fast.toFixed().toString();
-
-  return toGwei(instantGasPrice);
+  return await (await ethers.getDefaultProvider().getGasPrice()).toNumber();
 };
 
 export const toWei = (value: BigNumberish): string => {
@@ -36,7 +29,11 @@ export const parseEthersError = (error: any): string | undefined => {
   return (serializedError.data as any)?.originalError?.error?.message;
 };
 
-export const toFraction = (balance: string, decimals: string, precision = 8): string => {
+export const toFraction = (
+  balance: string,
+  decimals: string,
+  precision = 8
+): string => {
   const numerator = new BigNumber(balance.toString());
   const denominator = new BigNumber(10).exponentiatedBy(decimals);
   const value = numerator.dividedBy(denominator);
@@ -46,7 +43,11 @@ export const toFraction = (balance: string, decimals: string, precision = 8): st
   return value.decimalPlaces(precision).toString();
 };
 
-export const fromFraction = (balance: BigNumberish, decimals: BigNumberish, precision = 8): string => {
+export const fromFraction = (
+  balance: BigNumberish,
+  decimals: BigNumberish,
+  precision = 8
+): string => {
   balance = new BigNumber(balance.toString());
   decimals = new BigNumber(10).exponentiatedBy(decimals);
   return balance.multipliedBy(decimals).decimalPlaces(precision).toString();
