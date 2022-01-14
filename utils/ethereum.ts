@@ -14,7 +14,7 @@ export const getGasPrice = async () => {
   const web3 = new Web3(window.ethereum);
   const gasPrice = await web3.eth.getGasPrice();
   console.log("gasPrice", gasPrice);
-  return Number(gasPrice);
+  return gasPrice;
 };
 
 export const toWei = (value: BigNumberish): string => {
