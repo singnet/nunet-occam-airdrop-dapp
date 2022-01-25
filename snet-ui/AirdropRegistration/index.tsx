@@ -215,8 +215,8 @@ export default function AirdropRegistration({
             </Grid>
             <Grid item xs={4}>
               <Typography variant="h4">
-                {stakeInfo.stakable_tokens / 1000000}{" "}
-                {stakeInfo.stakable_token_name}
+                {`${Number(stakeInfo.stakable_tokens) / 1000000} ${stakeInfo.stakable_token_name}`}
+
               </Typography>
             </Grid>
           </Grid>
@@ -227,9 +227,8 @@ export default function AirdropRegistration({
               </Typography>
             </Grid>
             <Grid item xs={4}>
-              <Typography variant="h4">
-                {stakeInfo.claimable_tokens_to_wallet / 1000000}{" "}
-              </Typography>
+                <Typography variant="h4">{`${Number(stakeInfo.claimable_tokens_to_wallet) / 1000000}`}
+                </Typography>
             </Grid>
           </Grid>
           <Grid container spacing={2} sx={{ marginTop: 2 }}>
