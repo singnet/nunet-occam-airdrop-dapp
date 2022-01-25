@@ -92,7 +92,7 @@ const Home: NextPage = () => {
       );
 
       const airdropSchedules = airdropTimelines.flat().map((timeline) => ({
-        time: new Date(timeline.airdrop_window_timeline_date + " UTC"),
+        time: timeline.airdrop_window_timeline_date,
         title: timeline.airdrop_window_timeline_info,
         description: timeline.airdrop_window_timeline_description,
       }));

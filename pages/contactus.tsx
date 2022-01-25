@@ -19,6 +19,7 @@ const alertTypes: any = {
   ERROR: "error",
 };
 export default function ContactUs() {
+  const [walletAddress, setWalletAddress] = useState("");
   const [message, setMessage] = useState("");
   const [email, setEmail] = useState("");
   const [username, setUsername] = useState("");
@@ -30,6 +31,10 @@ export default function ContactUs() {
     value: "",
   });
   const [category, setCategory] = useState("Airdrop Enquiry");
+
+  const handleAddressChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setWalletAddress(event.target.value);
+  };
 
   const handleChange = (event: SelectChangeEvent) => {
     setCategory(event.target.value as string);
@@ -52,12 +57,12 @@ export default function ContactUs() {
 
   const sendEmail = async () => {
     try {
-      const query = ` Message : ${message} . From ${email}`;
+      const query = `Message : ${message} . From ${email} Wallet Address : ${walletAddress}`;
       const EMAIL_HOST = process.env.NEXT_PUBLIC_CONTACT_US_MAILER;
       const payload = {
         recipient: EMAIL_HOST,
         message: query,
-        subject: "General enquiry ",
+        subject: "Occam support enquiry ",
         notification_type: "support",
       };
       await axios.post(API_PATHS.CONTACT_US, payload);
@@ -96,7 +101,7 @@ export default function ContactUs() {
 
   return (
     <CommonLayout>
-      <Box>
+      <Box sx={{ mt: 20 }}>
         <Typography align="center" color="primary" variant="h2">
           Contact Us
         </Typography>
@@ -130,9 +135,11 @@ export default function ContactUs() {
           <TextField
             color="primary"
             label="Wallet Address (Optional)"
-            placeholder="connect your wallet"
+            placeholder="Wallet Address"
             sx={{ my: 3 }}
             fullWidth
+            value={walletAddress}
+            onChange={handleAddressChange}
           />
           <Select
             labelId="feedback-category-select-label"

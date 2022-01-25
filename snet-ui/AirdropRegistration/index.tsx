@@ -19,6 +19,7 @@ import { isDateBetween, isDateGreaterThan } from "utils/date";
 import Staketype from "snet-ui/AirdropRegistration/Staketype";
 import axios from "utils/Axios";
 import Container from "@mui/material/Container";
+import moment from "moment";
 
 import { API_PATHS } from "utils/constants/ApiPaths";
 
@@ -78,7 +79,7 @@ const windowStatusActionMap = {
 };
 
 const statusLabelMap = {
-  [WindowStatus.CLAIM]: "Claim Open",
+  [WindowStatus.CLAIM]: "Vesting Open",
   [WindowStatus.REGISTRATION]: "Registration Open",
   [WindowStatus.UPCOMING]: "",
 };
@@ -116,7 +117,10 @@ export default function AirdropRegistration({
   const [claimLoader, setClaimLoader] = useState(false);
   const [stakeModal, setStakeModal] = useState(false);
 
-  const formattedDate = useMemo(() => DateFormatter.format(endDate), [endDate]);
+  const formattedDate = useMemo(
+    () => moment.utc(endDate).local().format("YYYY-MM-DD HH:mm:ss"),
+    [endDate]
+  );
 
   const toggleStakeModal = () => {
     setStakeModal(!stakeModal);
@@ -211,7 +215,8 @@ export default function AirdropRegistration({
             </Grid>
             <Grid item xs={4}>
               <Typography variant="h4">
-                {stakeInfo.stakableTokens} {stakeInfo.stakableTokenName}
+                {`${Number(stakeInfo.stakable_tokens) / 1000000} ${stakeInfo.stakable_token_name}`}
+
               </Typography>
             </Grid>
           </Grid>
@@ -222,10 +227,8 @@ export default function AirdropRegistration({
               </Typography>
             </Grid>
             <Grid item xs={4}>
-              <Typography variant="h4">
-                {stakeInfo.claimableTokensToWallet}{" "}
-                {stakeInfo.stakableTokenName}
-              </Typography>
+                <Typography variant="h4">{`${Number(stakeInfo.claimable_tokens_to_wallet) / 1000000}`}
+                </Typography>
             </Grid>
           </Grid>
           <Grid container spacing={2} sx={{ marginTop: 2 }}>
@@ -281,7 +284,7 @@ export default function AirdropRegistration({
               align="center"
               mb={1}
             >
-              Airdrop {windowName} window &nbsp;
+              Vesting {windowName} window &nbsp;
               {currentWindowId} / {totalWindows} &nbsp;
               {windowAction}:
             </Typography>
@@ -312,7 +315,7 @@ export default function AirdropRegistration({
                   color="textAdvanced.secondary"
                   align="center"
                 >
-                  {airdropWindowrewards/1000000} NTX
+                  {airdropWindowrewards / 1000000} NTX
                 </Typography>
               </Box>
               <Container
@@ -334,8 +337,8 @@ export default function AirdropRegistration({
                     sx={{ mx: 1, fontSize: 16 }}
                   >
                     You can start claiming your tokens now. It is possible to
-                    claim all tokens with the last window which will 
-                    save you gas fees.
+                    claim all tokens with the last window which will save you
+                    gas fees.
                   </Typography>
                 </Box>
               </Container>
@@ -359,21 +362,20 @@ export default function AirdropRegistration({
           >
             {airdropWindowStatus === WindowStatus.CLAIM && isClaimActive ? (
               <Stack spacing={2} direction="row">
-                {stakeInfo.isStakable ? (
-                  <LoadingButton
-                    variant="contained"
-                    color="secondary"
-                    sx={{
-                      width: 350,
-                      textTransform: "capitalize",
-                      fontWeight: 600,
-                    }}
-                    onClick={toggleStakeModal}
-                    loading={claimLoader}
-                  >
-                    Stake
-                  </LoadingButton>
-                ) : null}
+                <LoadingButton
+                  variant="contained"
+                  color="secondary"
+                  sx={{
+                    width: 350,
+                    textTransform: "capitalize",
+                    fontWeight: 600,
+                  }}
+                  onClick={toggleStakeModal}
+                  loading={claimLoader}
+                  disabled={!stakeInfo.is_stakable}
+                >
+                  Stake
+                </LoadingButton>
                 <LoadingButton
                   variant="contained"
                   sx={{
@@ -416,22 +418,6 @@ export default function AirdropRegistration({
                     View Schedule
                   </Button>
                 </Box>
-                <Box
-                  sx={{ display: "flex", justifyContent: "center", mt: [2, 0] }}
-                >
-                  <Button
-                    variant="contained"
-                    color="secondary"
-                    onClick={onViewRules}
-                    sx={{
-                      textTransform: "capitalize",
-                      width: 170,
-                      fontWeight: 600,
-                    }}
-                  >
-                    View Rules
-                  </Button>
-                </Box>
               </>
             )}
           </Box>
@@ -442,7 +428,7 @@ export default function AirdropRegistration({
                 color="textAdvanced.secondary"
                 variant="h5"
               >
-                Your Airdrop History
+                Your Vesting History
               </Typography>
               <History events={history} />
             </Container>

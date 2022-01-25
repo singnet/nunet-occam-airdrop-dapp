@@ -8,12 +8,11 @@ import { splitSignature } from "@ethersproject/bytes";
 import { getGasPrice } from "./ethereum";
 import { TransactionResponse } from "@ethersproject/abstract-provider";
 
-export const useAirdropContract = (contractAddress: string) => {
-  console.log("Contract Address", contractAddress);
-  //   const [details, setDetails] = useState();
+export const useAirdropContract = () => {
   const { account, library } = useActiveWeb3React();
 
   const stake = async (
+    contractAddress: string,
     tokenAddress: string,
     stakingAddress: string,
     airdropAmount: string,
@@ -57,7 +56,8 @@ export const useAirdropContract = (contractAddress: string) => {
 
     console.log("ClaimAndStake ARGS: ", args);
 
-    const gasPrice = await getGasPrice();
+    const gasPrice = await airdropContract.provider.getGasPrice();
+    console.log("gasPrice", gasPrice);
     const gasLimit = await airdropContract.estimateGas.claimAndStake(...args);
     console.log("estimated gas limit", gasLimit);
     const txn = await airdropContract.claimAndStake(...args, {
@@ -69,6 +69,7 @@ export const useAirdropContract = (contractAddress: string) => {
   };
 
   const claim = async (
+    contractAddress: string,
     tokenAddress: string,
     claimAmount: string,
     airdropId: string,
@@ -102,7 +103,8 @@ export const useAirdropContract = (contractAddress: string) => {
       signatureParts.s,
     ];
 
-    const gasPrice = await getGasPrice();
+    const gasPrice = await airdropContract.provider.getGasPrice();
+    console.log("gasPrice", gasPrice);
     const gasLimit = await airdropContract.estimateGas.claim(...args);
     console.log("estimated gas limit", gasLimit);
     const txn = await airdropContract.claim(...args, {
