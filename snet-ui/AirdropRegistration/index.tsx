@@ -31,7 +31,7 @@ type HistoryEvent = {
 type StakeInfo = {
   claimableTokensToWallet: string;
   isStakable: boolean;
-  stakableTokenName: string;
+  tokenName: string;
   stakableTokens: string;
   isLoading: boolean;
 };
@@ -215,7 +215,7 @@ export default function AirdropRegistration({
             </Grid>
             <Grid item xs={4}>
               <Typography variant="h6">
-                {`${Number(stakeInfo.stakable_tokens) / 1000000} ${stakeInfo.stakable_token_name}`}
+                {`${Number(stakeInfo.stakable_tokens) / 1000000} ${stakeInfo.token_name}`}
 
               </Typography>
             </Grid>
