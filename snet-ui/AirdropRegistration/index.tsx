@@ -31,7 +31,7 @@ type HistoryEvent = {
 type StakeInfo = {
   claimableTokensToWallet: string;
   isStakable: boolean;
-  stakableTokenName: string;
+  tokenName: string;
   stakableTokens: string;
   isLoading: boolean;
 };
@@ -209,50 +209,41 @@ export default function AirdropRegistration({
           </Box>
           <Grid container spacing={2}>
             <Grid item xs={8}>
-              <Typography variant="h6" color="text.primary">
+              <Typography variant="h5" color="text.primary">
                 Token to be Staked
               </Typography>
             </Grid>
             <Grid item xs={4}>
-              <Typography variant="h4">
-                {stakeInfo.stakable_tokens / 1000000}{" "}
-                {stakeInfo.stakable_token_name}
+              <Typography variant="h6">
+                {`${Number(stakeInfo.stakable_tokens) / 1000000} ${stakeInfo.token_name}`}
+
               </Typography>
             </Grid>
           </Grid>
           <Grid container spacing={2}>
             <Grid item xs={8}>
-              <Typography variant="h6">
+              <Typography variant="h5">
                 Tokens to be Claimed into Wallet
               </Typography>
             </Grid>
             <Grid item xs={4}>
-              <Typography variant="h4">
-                {stakeInfo.claimable_tokens_to_wallet / 1000000}{" "}
-              </Typography>
+                <Typography variant="h6">{`${Number(stakeInfo.claimable_tokens_to_wallet) / 1000000}`}
+                </Typography>
             </Grid>
           </Grid>
           <Grid container spacing={2} sx={{ marginTop: 2 }}>
+
             <Grid item xs={6}>
-              <Link
-                href={`https://singularitynet.io/`}
-                target="_blank"
-                rel="noreferrer"
-              >
-                Visit SingularityNET
-              </Link>
-            </Grid>
-            <Grid item xs={3}>
               <Button
                 onClick={toggleStakeModal}
                 color="secondary"
-                variant="outlined"
+                variant="contained"
                 fullWidth
               >
                 Cancel
               </Button>
             </Grid>
-            <Grid item xs={3}>
+            <Grid item xs={6}>
               <Button
                 onClick={handleStakeClick}
                 color="secondary"
@@ -263,6 +254,15 @@ export default function AirdropRegistration({
               </Button>
             </Grid>
           </Grid>
+          <Box sx={{ marginBottom: 2, marginTop: 2 }}>
+            <Grid item xs={13} justifyContent="center" alignItems="right">
+              <Typography id="stake-modal-description" variant="p">
+                <Link href="https://app.singularitydao.ai/staking/bonded" target="_blank" rel="noreferrer" sx={{ mx: 1, fontSize: 14 }}>
+                  Visit SingularityDAO
+                </Link>
+              </Typography>
+            </Grid>
+          </Box>
         </Box>
       </Modal>
       <Box>
